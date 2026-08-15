@@ -1,0 +1,1813 @@
+{
+ "label": "baselines-n20",
+ "generated_utc": "2026-08-14T18:45:45Z",
+ "dataset": {
+  "path": "/Users/lakshgoyal/build-pipeline/outputs/builds/naive-mem0/work/data/locomo10.json",
+  "sha256": "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4",
+  "turns": 419,
+  "questions_used": 20,
+  "questions_eligible": 152
+ },
+ "config": {
+  "run": {
+   "label": "baselines-n20",
+   "seed": 20260814,
+   "out_dir": "results"
+  },
+  "dataset": {
+   "name": "locomo",
+   "path": "../work/data/locomo10.json",
+   "sha256_expected": "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4",
+   "conversation_ids": [
+    "conv-26"
+   ],
+   "exclude_categories": [
+    5
+   ],
+   "n_questions": 20,
+   "sample": "stratified"
+  },
+  "backend": {
+   "provider": "ollama",
+   "base_url": "http://127.0.0.1:11434"
+  },
+  "models": {
+   "answer": {
+    "model": "llama3.1:8b",
+    "temperature": 0.0,
+    "num_predict": 96,
+    "seed": 20260814
+   },
+   "judge": {
+    "model": "llama3.1:8b",
+    "temperature": 0.0,
+    "num_predict": 6,
+    "seed": 20260814
+   },
+   "memory_llm": {
+    "model": "llama3.1:8b",
+    "temperature": 0.0
+   },
+   "embedder": {
+    "model": "nomic-embed-text",
+    "dims": 768
+   }
+  },
+  "retrieval": {
+   "top_k": 10,
+   "recency_turns": 20
+  },
+  "systems": [
+   "full_context",
+   "recency_window",
+   "bm25"
+  ],
+  "mem0": {
+   "role_mapping": "speaker_alternating",
+   "prefix_speaker_name": true,
+   "include_session_date": true,
+   "infer": true,
+   "vector_store_path": "../work/qdrant_run"
+  },
+  "prompts": {
+   "answer": "You are answering a question about a long-running conversation between {speaker_a} and {speaker_b}.\nUse ONLY the context below. If the context does not contain the answer, reply exactly: NO ANSWER\nAnswer with as few words as possible: a name, a date, or a short phrase. Do not explain.\n\nCONTEXT:\n{context}\n\nQUESTION: {question}\nSHORT ANSWER:\n",
+   "judge": "You are grading one short answer against the gold answer.\nMark CORRECT if the prediction conveys the same fact as the gold answer, even if worded\ndifferently, abbreviated, or padded with extra words. Otherwise mark INCORRECT.\n\nQUESTION: {question}\nGOLD: {gold}\nPREDICTION: {prediction}\n\nReply with exactly one word: CORRECT or INCORRECT.\n"
+  },
+  "scoring": {
+   "primary": "llm_judge",
+   "deterministic_f1_threshold": 0.5
+  },
+  "pricing": {
+   "sheet_name": "gpt-4o-mini + text-embedding-3-small list price",
+   "source_note": "Read from https://developers.openai.com/api/docs/pricing on 2026-08-14. A price sheet is a config input, not a measurement. Re-check it before quoting the $ column.",
+   "input_per_mtok": 0.15,
+   "output_per_mtok": 0.6,
+   "embed_per_mtok": 0.02
+  }
+ },
+ "summary": {
+  "full_context": {
+   "n": 20,
+   "accuracy_llm_judge": 0.3,
+   "accuracy_deterministic": 0.0,
+   "solved_llm_judge": 6,
+   "solved_deterministic": 0,
+   "mean_token_f1": 0.04306005189937574,
+   "ingest_wall_s": 1.1332999747537542e-05,
+   "ingest_llm_calls": 0,
+   "ingest_prompt_tokens": 0,
+   "ingest_completion_tokens": 0,
+   "query_prompt_tokens": 41000,
+   "query_completion_tokens": 1117,
+   "mean_context_chars": 73892,
+   "p50_query_ms": 4563.776208000036,
+   "p95_query_ms": 10576.910040999337,
+   "p50_retrieve_ms": 0.3295410001555865,
+   "p95_retrieve_ms": 2.5103749999288993,
+   "tokens_per_solved_task": 7019.5,
+   "usd_ingest_DERIVED": 0.0,
+   "usd_query_total_DERIVED": 0.0068202,
+   "usd_per_solved_task_DERIVED": 0.0011367
+  },
+  "recency_window": {
+   "n": 20,
+   "accuracy_llm_judge": 0.1,
+   "accuracy_deterministic": 0.05,
+   "solved_llm_judge": 2,
+   "solved_deterministic": 1,
+   "mean_token_f1": 0.042857142857142864,
+   "ingest_wall_s": 0.0004494999998314597,
+   "ingest_llm_calls": 0,
+   "ingest_prompt_tokens": 0,
+   "ingest_completion_tokens": 0,
+   "query_prompt_tokens": 21212,
+   "query_completion_tokens": 92,
+   "mean_context_chars": 3703,
+   "p50_query_ms": 459.93183300015517,
+   "p95_query_ms": 627.6677910000217,
+   "p50_retrieve_ms": 0.01608399998076493,
+   "p95_retrieve_ms": 0.2974999997604755,
+   "tokens_per_solved_task": 10652.0,
+   "usd_ingest_DERIVED": 0.0,
+   "usd_query_total_DERIVED": 0.0032370000000000003,
+   "usd_per_solved_task_DERIVED": 0.0016185000000000001
+  },
+  "bm25": {
+   "n": 20,
+   "accuracy_llm_judge": 0.5,
+   "accuracy_deterministic": 0.25,
+   "solved_llm_judge": 10,
+   "solved_deterministic": 5,
+   "mean_token_f1": 0.1914746543778802,
+   "ingest_wall_s": 0.0460304170001109,
+   "ingest_llm_calls": 0,
+   "ingest_prompt_tokens": 0,
+   "ingest_completion_tokens": 0,
+   "query_prompt_tokens": 11173,
+   "query_completion_tokens": 129,
+   "mean_context_chars": 1753.95,
+   "p50_query_ms": 2347.1347499998956,
+   "p95_query_ms": 2890.4002489998675,
+   "p50_retrieve_ms": 0.96537499985061,
+   "p95_retrieve_ms": 7.773499999984779,
+   "tokens_per_solved_task": 1130.2,
+   "usd_ingest_DERIVED": 0.0,
+   "usd_query_total_DERIVED": 0.00175335,
+   "usd_per_solved_task_DERIVED": 0.00017533500000000001
+  }
+ },
+ "per_question": {
+  "full_context": [
+   {
+    "question": "What are some changes Caroline has faced during her transition journey?",
+    "category": 1,
+    "gold": "Changes to her body, losing unsupportive friends",
+    "prediction": "Caroline has undergone a significant transformation in her life, particularly in terms of self-acceptance and identity. She has come to terms with being true to herself and embracing her womanhood. Additionally, she is now pursuing adoption as a way to build a family and provide love and support to children who need it. This journey has been empowering for Caroline, allowing her to find acceptance and help others in the process.",
+    "context_chars": 73892,
+    "retrieve_ms": 0.10174999988521449,
+    "answer_ms": 7465.23391699975,
+    "query_ms": 7465.335666999636,
+    "deterministic_correct": false,
+    "token_f1": 0.05333333333333333,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "When is Melanie's daughter's birthday?",
+    "category": 2,
+    "gold": "13 August",
+    "prediction": "There is no mention of Melanie's daughter's birthday in the conversation.",
+    "context_chars": 73892,
+    "retrieve_ms": 1.02854099986871,
+    "answer_ms": 1123.6114580001413,
+    "query_ms": 1124.63999900001,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "Would Caroline want to move back to her home country soon?",
+    "category": 3,
+    "gold": "No; she's in the process of adopting children.",
+    "prediction": "No, based on the conversation, it seems unlikely that Caroline would want to move back to her home country soon. She has mentioned adopting children through an agency in a foreign country, which suggests she is planning to stay in this new location for the foreseeable future. Additionally, she has expressed her desire to build a family and create a safe and loving home for these children, implying that she intends to establish roots in this new place.",
+    "context_chars": 73892,
+    "retrieve_ms": 0.3295410001555865,
+    "answer_ms": 4326.808540999991,
+    "query_ms": 4327.138082000147,
+    "deterministic_correct": false,
+    "token_f1": 0.125,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "What kind of pot did Mel and her kids make with clay?",
+    "category": 4,
+    "gold": "a cup with a dog face on it",
+    "prediction": "There is no mention of Melanie and her kids making a pot with clay in the conversation.",
+    "context_chars": 73892,
+    "retrieve_ms": 0.21654200008924818,
+    "answer_ms": 9668.211374999828,
+    "query_ms": 9668.427916999917,
+    "deterministic_correct": false,
+    "token_f1": 0.09523809523809522,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "How many children does Melanie have?",
+    "category": 1,
+    "gold": "3",
+    "prediction": "Melanie has at least three children, as she mentions \"the kids\" multiple times in the conversation.",
+    "context_chars": 73892,
+    "retrieve_ms": 0.27995900018140674,
+    "answer_ms": 4674.893583000085,
+    "query_ms": 4675.173542000266,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "When did Melanie get hurt?",
+    "category": 2,
+    "gold": "September 2023",
+    "prediction": "There is no mention of Melanie getting hurt in the conversation. However, it was mentioned that her son got into an accident during a road trip on October 13th, but Melanie herself was not injured.",
+    "context_chars": 73892,
+    "retrieve_ms": 0.6231249999473221,
+    "answer_ms": 3705.0967910004147,
+    "query_ms": 3705.719916000362,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "Would Caroline still want to pursue counseling as a career if she hadn't received support growing up?",
+    "category": 3,
+    "gold": "Likely no",
+    "prediction": "Based on the conversation, it seems likely that Caroline would still want to pursue counseling as a career even if she hadn't received support growing up. She mentions that finding self-acceptance was a long process and that the help she got from friends, family, and people she looked up to was invaluable. However, she also expresses her desire to pass on that same support to others who need it, which suggests that she has a strong passion for helping others.\n\nIn fact, Caroline",
+    "context_chars": 73892,
+    "retrieve_ms": 0.21304199981386773,
+    "answer_ms": 5739.853999999923,
+    "query_ms": 5740.067041999737,
+    "deterministic_correct": false,
+    "token_f1": 0.02439024390243903,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "What activity did Caroline used to do with her dad?",
+    "category": 4,
+    "gold": "Horseback riding",
+    "prediction": "There is no mention of Caroline doing an activity with her dad in the conversation. The conversation revolves around Melanie's family, their road trip, and Caroline's adoption journey.",
+    "context_chars": 73892,
+    "retrieve_ms": 1.5416249998452258,
+    "answer_ms": 2651.4958749999096,
+    "query_ms": 2653.037499999755,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "In what ways is Caroline participating in the LGBTQ community?",
+    "category": 1,
+    "gold": "Joining activist group, going to pride parades, participating in an art show, mentoring program",
+    "prediction": "Caroline is participating in the LGBTQ community by:\n\n* Creating art (a poster) that stands for freedom and being true to oneself, specifically embracing her womanhood.\n* Being open about her adoption journey, which implies she may be a member of the LGBTQ+ community or an ally.\n* Discussing self-acceptance and finding one's true identity, suggesting she has personal experience with these issues.\n\nThese actions indicate Caroline is part of the LGBTQ community or at least an ally who",
+    "context_chars": 73892,
+    "retrieve_ms": 0.2729580000959686,
+    "answer_ms": 4563.50324999994,
+    "query_ms": 4563.776208000036,
+    "deterministic_correct": false,
+    "token_f1": 0.09523809523809525,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "When did Melanie run a charity race?",
+    "category": 2,
+    "gold": "The sunday before 25 May 2023",
+    "prediction": "There is no mention of Melanie running a charity race in the provided conversation logs. The conversations revolve around Melanie's family, her son getting into an accident on a road trip, Caroline's adoption agency interviews, and their discussions about family, love, acceptance, and personal growth.",
+    "context_chars": 73892,
+    "retrieve_ms": 0.29983299964442267,
+    "answer_ms": 3106.612665999819,
+    "query_ms": 3106.9124989994634,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "Would Melanie be more interested in going to a national park or a theme park?",
+    "category": 3,
+    "gold": "National park; she likes the outdoors",
+    "prediction": "Based on the conversation between Caroline and Melanie, it seems that Melanie is more interested in nature and spending quality time with her family. She mentions enjoying camping trips and appreciates the peacefulness of being in nature. Therefore, she would likely be more interested in going to a national park rather than a theme park.",
+    "context_chars": 73892,
+    "retrieve_ms": 0.2881670002352621,
+    "answer_ms": 3264.5055419998243,
+    "query_ms": 3264.7937090000596,
+    "deterministic_correct": false,
+    "token_f1": 0.10714285714285714,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "What did Caroline find in her neighborhood during her walk?",
+    "category": 4,
+    "gold": "a rainbow sidewalk",
+    "prediction": "There is no mention of Caroline finding anything during a walk in the provided conversation. The conversation revolves around Melanie's road trip, family bonding, and Caroline's adoption journey.",
+    "context_chars": 73892,
+    "retrieve_ms": 0.4752080003527226,
+    "answer_ms": 2087.625499999831,
+    "query_ms": 2088.1007080001837,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "What LGBTQ+ events has Caroline participated in?",
+    "category": 1,
+    "gold": "Pride parade, school speech, support group",
+    "prediction": "The conversation does not explicitly mention Caroline participating in any specific LGBTQ+ events. However, it is mentioned that she drew a poster for an event (likely related to women's empowerment or pride) and that the room was \"electric with energy and support\" during this event. Additionally, her adoption journey and desire to build a family through adoption suggest that she may be part of the LGBTQ+ community.",
+    "context_chars": 73892,
+    "retrieve_ms": 0.21691699976145173,
+    "answer_ms": 11918.398959000115,
+    "query_ms": 11918.615875999876,
+    "deterministic_correct": false,
+    "token_f1": 0.0588235294117647,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "When did Caroline and Melanie go to a pride fesetival together?",
+    "category": 2,
+    "gold": "2022",
+    "prediction": "There is no mention of Caroline and Melanie going to a pride festival together in the conversation logs provided. The conversation mentions posters from an event, but it does not specify what type of event or when they attended it.",
+    "context_chars": 73892,
+    "retrieve_ms": 0.40083300018523005,
+    "answer_ms": 10166.229165999994,
+    "query_ms": 10166.629999000179,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "What fields would Caroline be likely to pursue in her educaton?",
+    "category": 3,
+    "gold": "Psychology, counseling certification",
+    "prediction": "Based on the conversation, Caroline is passionate about helping others, particularly children in need, and has a strong desire to create a safe and loving home for them. She has also mentioned that she wants to \"give back\" and show love and acceptance to those who haven't had it before.\n\nGiven her interests and values, Caroline may be likely to pursue fields such as:\n\n1. Social Work: Caroline's desire to help children in need and create a safe and loving home for them",
+    "context_chars": 73892,
+    "retrieve_ms": 2.101832999869657,
+    "answer_ms": 5629.498415999933,
+    "query_ms": 5631.600248999803,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "What kind of painting did Caroline share with Melanie on October 13, 2023?",
+    "category": 4,
+    "gold": "An abstract painting with blue streaks on a wall.",
+    "prediction": "The conversation does not mention Caroline sharing a specific painting with Melanie on October 13, 2023. However, it is mentioned that Caroline drew an art piece inspired by the event they attended together, which stands for freedom and being real.",
+    "context_chars": 73892,
+    "retrieve_ms": 0.2552909995756636,
+    "answer_ms": 10576.654749999761,
+    "query_ms": 10576.910040999337,
+    "deterministic_correct": false,
+    "token_f1": 0.13953488372093023,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "What does Melanie do to destress?",
+    "category": 1,
+    "gold": "Running, pottery",
+    "prediction": "Melanie goes camping with her family as a way to reset and recharge. She finds peace and serenity in nature, which helps her destress.",
+    "context_chars": 73892,
+    "retrieve_ms": 2.5103749999288993,
+    "answer_ms": 2645.2600419997907,
+    "query_ms": 2647.7704169997196,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "When did Melanie's friend adopt a child?",
+    "category": 2,
+    "gold": "2022",
+    "prediction": "There is no mention of Melanie's friend adopting a child in the conversation. Caroline mentions passing adoption agency interviews, which suggests she is in the process of adopting a child, but it does not specify that she has already adopted one.",
+    "context_chars": 73892,
+    "retrieve_ms": 9.037458000420884,
+    "answer_ms": 2854.6435839998594,
+    "query_ms": 2863.6810420002803,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "Would Melanie likely enjoy the song \"The Four Seasons\" by Vivaldi?",
+    "category": 3,
+    "gold": "Yes; it's classical music",
+    "prediction": "No, based on their conversation, it seems unlikely that Melanie would enjoy the song \"The Four Seasons\" by Vivaldi. The conversation between Caroline and Melanie is about personal growth, family, love, acceptance, and nature, which suggests they have a more contemporary and sentimental taste in music. \"The Four Seasons\" is a classical piece, which may not align with their musical preferences.",
+    "context_chars": 73892,
+    "retrieve_ms": 0.3255839997109433,
+    "answer_ms": 4521.574667000095,
+    "query_ms": 4521.900250999806,
+    "deterministic_correct": false,
+    "token_f1": 0.09999999999999999,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "What was Melanie's favorite book from her childhood?",
+    "category": 4,
+    "gold": "\"Charlotte's Web\"",
+    "prediction": "There is no mention of a favorite book from Melanie's childhood in the provided conversation. The conversation revolves around Melanie and Caroline discussing their personal lives, family, adoption, and self-acceptance.",
+    "context_chars": 73892,
+    "retrieve_ms": 1.2074170003870677,
+    "answer_ms": 10228.946000000178,
+    "query_ms": 10230.153417000565,
+    "deterministic_correct": false,
+    "token_f1": 0.0625,
+    "llm_judge_correct": false
+   }
+  ],
+  "recency_window": [
+   {
+    "question": "What are some changes Caroline has faced during her transition journey?",
+    "category": 1,
+    "gold": "Changes to her body, losing unsupportive friends",
+    "prediction": "Finding self-acceptance was a long process.",
+    "context_chars": 3703,
+    "retrieve_ms": 0.6104589997448784,
+    "answer_ms": 4842.821665999963,
+    "query_ms": 4843.432124999708,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "When is Melanie's daughter's birthday?",
+    "category": 2,
+    "gold": "13 August",
+    "prediction": "NO ANSWER",
+    "context_chars": 3703,
+    "retrieve_ms": 0.05104100000608014,
+    "answer_ms": 470.6322500001079,
+    "query_ms": 470.68329100011397,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "Would Caroline want to move back to her home country soon?",
+    "category": 3,
+    "gold": "No; she's in the process of adopting children.",
+    "prediction": "NO ANSWER",
+    "context_chars": 3703,
+    "retrieve_ms": 0.01608399998076493,
+    "answer_ms": 454.2324170001848,
+    "query_ms": 454.24850100016556,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "What kind of pot did Mel and her kids make with clay?",
+    "category": 4,
+    "gold": "a cup with a dog face on it",
+    "prediction": "NO ANSWER",
+    "context_chars": 3703,
+    "retrieve_ms": 0.008707999768375885,
+    "answer_ms": 447.911958000077,
+    "query_ms": 447.92066599984537,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "How many children does Melanie have?",
+    "category": 1,
+    "gold": "3",
+    "prediction": "NO ANSWER",
+    "context_chars": 3703,
+    "retrieve_ms": 0.025625000034779077,
+    "answer_ms": 456.5137499998855,
+    "query_ms": 456.53937499992026,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "When did Melanie get hurt?",
+    "category": 2,
+    "gold": "September 2023",
+    "prediction": "NO ANSWER",
+    "context_chars": 3703,
+    "retrieve_ms": 0.008750000233703759,
+    "answer_ms": 464.3289579998964,
+    "query_ms": 464.3377080001301,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "Would Caroline still want to pursue counseling as a career if she hadn't received support growing up?",
+    "category": 3,
+    "gold": "Likely no",
+    "prediction": "NO ANSWER",
+    "context_chars": 3703,
+    "retrieve_ms": 0.009124999905907316,
+    "answer_ms": 459.92270800024926,
+    "query_ms": 459.93183300015517,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "What activity did Caroline used to do with her dad?",
+    "category": 4,
+    "gold": "Horseback riding",
+    "prediction": "NO ANSWER",
+    "context_chars": 3703,
+    "retrieve_ms": 0.025750000077096047,
+    "answer_ms": 567.2304580002674,
+    "query_ms": 567.2562080003445,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "In what ways is Caroline participating in the LGBTQ community?",
+    "category": 1,
+    "gold": "Joining activist group, going to pride parades, participating in an art show, mentoring program",
+    "prediction": "NO ANSWER",
+    "context_chars": 3703,
+    "retrieve_ms": 0.03912500005753827,
+    "answer_ms": 627.6286659999641,
+    "query_ms": 627.6677910000217,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "When did Melanie run a charity race?",
+    "category": 2,
+    "gold": "The sunday before 25 May 2023",
+    "prediction": "NO ANSWER",
+    "context_chars": 3703,
+    "retrieve_ms": 0.2974999997604755,
+    "answer_ms": 462.5088749999122,
+    "query_ms": 462.8063749996727,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "Would Melanie be more interested in going to a national park or a theme park?",
+    "category": 3,
+    "gold": "National park; she likes the outdoors",
+    "prediction": "National park.",
+    "context_chars": 3703,
+    "retrieve_ms": 0.00691599962010514,
+    "answer_ms": 390.6364580002446,
+    "query_ms": 390.6433739998647,
+    "deterministic_correct": true,
+    "token_f1": 0.5714285714285715,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "What did Caroline find in her neighborhood during her walk?",
+    "category": 4,
+    "gold": "a rainbow sidewalk",
+    "prediction": "NO ANSWER",
+    "context_chars": 3703,
+    "retrieve_ms": 0.012167000022600405,
+    "answer_ms": 395.96625000012864,
+    "query_ms": 395.97841700015124,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "What LGBTQ+ events has Caroline participated in?",
+    "category": 1,
+    "gold": "Pride parade, school speech, support group",
+    "prediction": "NO ANSWER",
+    "context_chars": 3703,
+    "retrieve_ms": 0.008999999863590347,
+    "answer_ms": 463.55870799970944,
+    "query_ms": 463.56770799957303,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "When did Caroline and Melanie go to a pride fesetival together?",
+    "category": 2,
+    "gold": "2022",
+    "prediction": "NO ANSWER",
+    "context_chars": 3703,
+    "retrieve_ms": 0.028750000183208613,
+    "answer_ms": 443.10708299963153,
+    "query_ms": 443.13583299981474,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "What fields would Caroline be likely to pursue in her educaton?",
+    "category": 3,
+    "gold": "Psychology, counseling certification",
+    "prediction": "Social Work or Counseling.",
+    "context_chars": 3703,
+    "retrieve_ms": 0.011667000308079878,
+    "answer_ms": 569.966041999578,
+    "query_ms": 569.9777089998861,
+    "deterministic_correct": false,
+    "token_f1": 0.28571428571428575,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "What kind of painting did Caroline share with Melanie on October 13, 2023?",
+    "category": 4,
+    "gold": "An abstract painting with blue streaks on a wall.",
+    "prediction": "NO ANSWER",
+    "context_chars": 3703,
+    "retrieve_ms": 0.033833000088634435,
+    "answer_ms": 414.84012499995515,
+    "query_ms": 414.8739580000438,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "What does Melanie do to destress?",
+    "category": 1,
+    "gold": "Running, pottery",
+    "prediction": "Camping with her family.",
+    "context_chars": 3703,
+    "retrieve_ms": 0.008832999810692854,
+    "answer_ms": 554.5820420002201,
+    "query_ms": 554.5908750000308,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "When did Melanie's friend adopt a child?",
+    "category": 2,
+    "gold": "2022",
+    "prediction": "NO ANSWER",
+    "context_chars": 3703,
+    "retrieve_ms": 0.04137499990974902,
+    "answer_ms": 416.60425000009127,
+    "query_ms": 416.645625000001,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "Would Melanie likely enjoy the song \"The Four Seasons\" by Vivaldi?",
+    "category": 3,
+    "gold": "Yes; it's classical music",
+    "prediction": "NO ANSWER",
+    "context_chars": 3703,
+    "retrieve_ms": 0.00612499979979475,
+    "answer_ms": 401.4006249999511,
+    "query_ms": 401.4067499997509,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "What was Melanie's favorite book from her childhood?",
+    "category": 4,
+    "gold": "\"Charlotte's Web\"",
+    "prediction": "NO ANSWER",
+    "context_chars": 3703,
+    "retrieve_ms": 0.006083000243961578,
+    "answer_ms": 444.99999999970896,
+    "query_ms": 445.0060829999529,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   }
+  ],
+  "bm25": [
+   {
+    "question": "What are some changes Caroline has faced during her transition journey?",
+    "category": 1,
+    "gold": "Changes to her body, losing unsupportive friends",
+    "prediction": "Accepting and growing into true self, understanding and accepting herself through art.",
+    "context_chars": 2029,
+    "retrieve_ms": 14.609791000111727,
+    "answer_ms": 2875.7904579997557,
+    "query_ms": 2890.4002489998675,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "When is Melanie's daughter's birthday?",
+    "category": 2,
+    "gold": "13 August",
+    "prediction": "Last night of August.",
+    "context_chars": 1961,
+    "retrieve_ms": 7.773499999984779,
+    "answer_ms": 2641.181125000003,
+    "query_ms": 2648.9546249999876,
+    "deterministic_correct": false,
+    "token_f1": 0.3333333333333333,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "Would Caroline want to move back to her home country soon?",
+    "category": 3,
+    "gold": "No; she's in the process of adopting children.",
+    "prediction": "NO ANSWER",
+    "context_chars": 2256,
+    "retrieve_ms": 0.96537499985061,
+    "answer_ms": 2745.334499999899,
+    "query_ms": 2746.2998749997496,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "What kind of pot did Mel and her kids make with clay?",
+    "category": 4,
+    "gold": "a cup with a dog face on it",
+    "prediction": "This",
+    "context_chars": 1919,
+    "retrieve_ms": 2.839708999999857,
+    "answer_ms": 2265.5485830000544,
+    "query_ms": 2268.388292000054,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "How many children does Melanie have?",
+    "category": 1,
+    "gold": "3",
+    "prediction": "NO ANSWER",
+    "context_chars": 1790,
+    "retrieve_ms": 1.4055420001568564,
+    "answer_ms": 2467.8498749999562,
+    "query_ms": 2469.255417000113,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "When did Melanie get hurt?",
+    "category": 2,
+    "gold": "September 2023",
+    "prediction": "Last month.",
+    "context_chars": 1345,
+    "retrieve_ms": 0.8933750000323926,
+    "answer_ms": 1954.9589170001127,
+    "query_ms": 1955.852292000145,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "Would Caroline still want to pursue counseling as a career if she hadn't received support growing up?",
+    "category": 3,
+    "gold": "Likely no",
+    "prediction": "NO ANSWER",
+    "context_chars": 2367,
+    "retrieve_ms": 1.4359159999912663,
+    "answer_ms": 2791.944749999857,
+    "query_ms": 2793.380665999848,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "What activity did Caroline used to do with her dad?",
+    "category": 4,
+    "gold": "Horseback riding",
+    "prediction": "Horseback riding.",
+    "context_chars": 1384,
+    "retrieve_ms": 0.7496250000258442,
+    "answer_ms": 2002.3017919997983,
+    "query_ms": 2003.0514169998241,
+    "deterministic_correct": true,
+    "token_f1": 1.0,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "In what ways is Caroline participating in the LGBTQ community?",
+    "category": 1,
+    "gold": "Joining activist group, going to pride parades, participating in an art show, mentoring program",
+    "prediction": "Giving talks at school events, attending a transgender conference, joining an LGBTQ activist group, creating art for inclusivity and diversity.",
+    "context_chars": 2389,
+    "retrieve_ms": 0.8020839995879214,
+    "answer_ms": 3911.640416999944,
+    "query_ms": 3912.442500999532,
+    "deterministic_correct": false,
+    "token_f1": 0.2580645161290323,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "When did Melanie run a charity race?",
+    "category": 2,
+    "gold": "The sunday before 25 May 2023",
+    "prediction": "Last Saturday.",
+    "context_chars": 1230,
+    "retrieve_ms": 1.0323339997739822,
+    "answer_ms": 1880.1487089999682,
+    "query_ms": 1881.1810429997422,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "Would Melanie be more interested in going to a national park or a theme park?",
+    "category": 3,
+    "gold": "National park; she likes the outdoors",
+    "prediction": "NO ANSWER",
+    "context_chars": 1803,
+    "retrieve_ms": 0.6431669999074074,
+    "answer_ms": 2445.9380419998524,
+    "query_ms": 2446.58120899976,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "What did Caroline find in her neighborhood during her walk?",
+    "category": 4,
+    "gold": "a rainbow sidewalk",
+    "prediction": "A rainbow sidewalk for Pride Month.",
+    "context_chars": 1475,
+    "retrieve_ms": 0.5539160001717391,
+    "answer_ms": 2145.1573340000323,
+    "query_ms": 2145.711250000204,
+    "deterministic_correct": true,
+    "token_f1": 0.5714285714285715,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "What LGBTQ+ events has Caroline participated in?",
+    "category": 1,
+    "gold": "Pride parade, school speech, support group",
+    "prediction": "LGBTQ+ pride parade, group meetings, campaigns.",
+    "context_chars": 2085,
+    "retrieve_ms": 0.7429160000356205,
+    "answer_ms": 2889.1720419997,
+    "query_ms": 2889.9149579997356,
+    "deterministic_correct": true,
+    "token_f1": 0.5,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "When did Caroline and Melanie go to a pride fesetival together?",
+    "category": 2,
+    "gold": "2022",
+    "prediction": "NO ANSWER",
+    "context_chars": 1666,
+    "retrieve_ms": 0.7601249999424908,
+    "answer_ms": 2346.374624999953,
+    "query_ms": 2347.1347499998956,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "What fields would Caroline be likely to pursue in her educaton?",
+    "category": 3,
+    "gold": "Psychology, counseling certification",
+    "prediction": "Counseling.",
+    "context_chars": 2059,
+    "retrieve_ms": 0.8739579998291447,
+    "answer_ms": 2422.8054999998676,
+    "query_ms": 2423.6794579996968,
+    "deterministic_correct": true,
+    "token_f1": 0.5,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "What kind of painting did Caroline share with Melanie on October 13, 2023?",
+    "category": 4,
+    "gold": "An abstract painting with blue streaks on a wall.",
+    "prediction": "A drawing.",
+    "context_chars": 1407,
+    "retrieve_ms": 1.0445419998177385,
+    "answer_ms": 2083.155917000113,
+    "query_ms": 2084.2004589999306,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "What does Melanie do to destress?",
+    "category": 1,
+    "gold": "Running, pottery",
+    "prediction": "Running.",
+    "context_chars": 1398,
+    "retrieve_ms": 0.9708749998935673,
+    "answer_ms": 1969.2743749997135,
+    "query_ms": 1970.245249999607,
+    "deterministic_correct": true,
+    "token_f1": 0.6666666666666666,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "When did Melanie's friend adopt a child?",
+    "category": 2,
+    "gold": "2022",
+    "prediction": "NO ANSWER",
+    "context_chars": 1522,
+    "retrieve_ms": 0.7452909999301482,
+    "answer_ms": 2128.641792000053,
+    "query_ms": 2129.3870829999832,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "Would Melanie likely enjoy the song \"The Four Seasons\" by Vivaldi?",
+    "category": 3,
+    "gold": "Yes; it's classical music",
+    "prediction": "NO ANSWER",
+    "context_chars": 1577,
+    "retrieve_ms": 1.078249999864056,
+    "answer_ms": 2008.2505830000628,
+    "query_ms": 2009.3288329999268,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "What was Melanie's favorite book from her childhood?",
+    "category": 4,
+    "gold": "\"Charlotte's Web\"",
+    "prediction": "NO ANSWER",
+    "context_chars": 1417,
+    "retrieve_ms": 0.5387500000324508,
+    "answer_ms": 1757.739374999801,
+    "query_ms": 1758.2781249998334,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   }
+  ]
+ },
+ "calls": [
+  {
+   "system": "full_context",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 84,
+   "wall_ms": 7465.101374999904
+  },
+  {
+   "system": "full_context",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 188,
+   "completion_tokens": 3,
+   "wall_ms": 905.1475840001331
+  },
+  {
+   "system": "full_context",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 15,
+   "wall_ms": 1122.8425839999545
+  },
+  {
+   "system": "full_context",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 109,
+   "completion_tokens": 4,
+   "wall_ms": 575.2292500001204
+  },
+  {
+   "system": "full_context",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 87,
+   "wall_ms": 4326.363042000139
+  },
+  {
+   "system": "full_context",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 192,
+   "completion_tokens": 3,
+   "wall_ms": 962.2071670000878
+  },
+  {
+   "system": "full_context",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 19,
+   "wall_ms": 9668.03229099969
+  },
+  {
+   "system": "full_context",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 123,
+   "completion_tokens": 5,
+   "wall_ms": 1154.2912499999147
+  },
+  {
+   "system": "full_context",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 22,
+   "wall_ms": 4674.39933300011
+  },
+  {
+   "system": "full_context",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 113,
+   "completion_tokens": 4,
+   "wall_ms": 726.7389590001585
+  },
+  {
+   "system": "full_context",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 42,
+   "wall_ms": 3704.902999999831
+  },
+  {
+   "system": "full_context",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 135,
+   "completion_tokens": 5,
+   "wall_ms": 731.5140420000716
+  },
+  {
+   "system": "full_context",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 96,
+   "wall_ms": 5739.688333000231
+  },
+  {
+   "system": "full_context",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 202,
+   "completion_tokens": 5,
+   "wall_ms": 970.4036249995625
+  },
+  {
+   "system": "full_context",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 35,
+   "wall_ms": 2651.12845800013
+  },
+  {
+   "system": "full_context",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 132,
+   "completion_tokens": 4,
+   "wall_ms": 752.9484169999705
+  },
+  {
+   "system": "full_context",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 96,
+   "wall_ms": 4563.330917000258
+  },
+  {
+   "system": "full_context",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 210,
+   "completion_tokens": 4,
+   "wall_ms": 1090.5080409997936
+  },
+  {
+   "system": "full_context",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 57,
+   "wall_ms": 3106.216583999867
+  },
+  {
+   "system": "full_context",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 157,
+   "completion_tokens": 4,
+   "wall_ms": 834.3192500001351
+  },
+  {
+   "system": "full_context",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 63,
+   "wall_ms": 3264.3161669998335
+  },
+  {
+   "system": "full_context",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 169,
+   "completion_tokens": 3,
+   "wall_ms": 817.2982500000217
+  },
+  {
+   "system": "full_context",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 35,
+   "wall_ms": 2087.433583999882
+  },
+  {
+   "system": "full_context",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 132,
+   "completion_tokens": 4,
+   "wall_ms": 712.2197499998038
+  },
+  {
+   "system": "full_context",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 80,
+   "wall_ms": 11917.567750000217
+  },
+  {
+   "system": "full_context",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 180,
+   "completion_tokens": 4,
+   "wall_ms": 1017.3854579998078
+  },
+  {
+   "system": "full_context",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 44,
+   "wall_ms": 10165.912875000231
+  },
+  {
+   "system": "full_context",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 145,
+   "completion_tokens": 4,
+   "wall_ms": 2352.2265829997195
+  },
+  {
+   "system": "full_context",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 96,
+   "wall_ms": 5629.305999999815
+  },
+  {
+   "system": "full_context",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 198,
+   "completion_tokens": 3,
+   "wall_ms": 974.0889579998111
+  },
+  {
+   "system": "full_context",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 49,
+   "wall_ms": 10576.373832999707
+  },
+  {
+   "system": "full_context",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 160,
+   "completion_tokens": 4,
+   "wall_ms": 913.6623330000475
+  },
+  {
+   "system": "full_context",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 31,
+   "wall_ms": 2643.9814589998605
+  },
+  {
+   "system": "full_context",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 124,
+   "completion_tokens": 4,
+   "wall_ms": 738.5045420001006
+  },
+  {
+   "system": "full_context",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 47,
+   "wall_ms": 2853.248834000169
+  },
+  {
+   "system": "full_context",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 142,
+   "completion_tokens": 4,
+   "wall_ms": 822.7310000002035
+  },
+  {
+   "system": "full_context",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 79,
+   "wall_ms": 4520.870291999927
+  },
+  {
+   "system": "full_context",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 184,
+   "completion_tokens": 5,
+   "wall_ms": 1145.230458000242
+  },
+  {
+   "system": "full_context",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 40,
+   "wall_ms": 10228.646334000132
+  },
+  {
+   "system": "full_context",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 137,
+   "completion_tokens": 4,
+   "wall_ms": 2056.8542089999937
+  },
+  {
+   "system": "recency_window",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 1061,
+   "completion_tokens": 11,
+   "wall_ms": 4841.992125000161
+  },
+  {
+   "system": "recency_window",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 116,
+   "completion_tokens": 5,
+   "wall_ms": 694.4926249998389
+  },
+  {
+   "system": "recency_window",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 1057,
+   "completion_tokens": 4,
+   "wall_ms": 470.5706670001746
+  },
+  {
+   "system": "recency_window",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 1061,
+   "completion_tokens": 4,
+   "wall_ms": 454.21220799971707
+  },
+  {
+   "system": "recency_window",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 1062,
+   "completion_tokens": 4,
+   "wall_ms": 447.89737499968396
+  },
+  {
+   "system": "recency_window",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 1056,
+   "completion_tokens": 4,
+   "wall_ms": 456.4852919997975
+  },
+  {
+   "system": "recency_window",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 1055,
+   "completion_tokens": 4,
+   "wall_ms": 464.3117919999895
+  },
+  {
+   "system": "recency_window",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 1068,
+   "completion_tokens": 4,
+   "wall_ms": 459.90695799991954
+  },
+  {
+   "system": "recency_window",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 1060,
+   "completion_tokens": 4,
+   "wall_ms": 566.9968340002924
+  },
+  {
+   "system": "recency_window",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 1060,
+   "completion_tokens": 4,
+   "wall_ms": 627.5651670002844
+  },
+  {
+   "system": "recency_window",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 1057,
+   "completion_tokens": 4,
+   "wall_ms": 462.46175000032963
+  },
+  {
+   "system": "recency_window",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 1065,
+   "completion_tokens": 4,
+   "wall_ms": 390.6245419998413
+  },
+  {
+   "system": "recency_window",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 110,
+   "completion_tokens": 3,
+   "wall_ms": 468.5557500001778
+  },
+  {
+   "system": "recency_window",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 1060,
+   "completion_tokens": 4,
+   "wall_ms": 395.9465839998302
+  },
+  {
+   "system": "recency_window",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 1058,
+   "completion_tokens": 4,
+   "wall_ms": 463.5147919998417
+  },
+  {
+   "system": "recency_window",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 1064,
+   "completion_tokens": 4,
+   "wall_ms": 443.0869999996503
+  },
+  {
+   "system": "recency_window",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 1062,
+   "completion_tokens": 6,
+   "wall_ms": 569.9525830000312
+  },
+  {
+   "system": "recency_window",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 106,
+   "completion_tokens": 3,
+   "wall_ms": 494.5173750002141
+  },
+  {
+   "system": "recency_window",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 1067,
+   "completion_tokens": 4,
+   "wall_ms": 414.81900000007954
+  },
+  {
+   "system": "recency_window",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 1057,
+   "completion_tokens": 7,
+   "wall_ms": 554.5660420002605
+  },
+  {
+   "system": "recency_window",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 100,
+   "completion_tokens": 5,
+   "wall_ms": 610.3644579998218
+  },
+  {
+   "system": "recency_window",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 1058,
+   "completion_tokens": 4,
+   "wall_ms": 416.5779580002891
+  },
+  {
+   "system": "recency_window",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 1065,
+   "completion_tokens": 4,
+   "wall_ms": 401.38791700019283
+  },
+  {
+   "system": "recency_window",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 1059,
+   "completion_tokens": 4,
+   "wall_ms": 444.98633300008805
+  },
+  {
+   "system": "bm25",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 593,
+   "completion_tokens": 16,
+   "wall_ms": 2875.6124999999884
+  },
+  {
+   "system": "bm25",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 121,
+   "completion_tokens": 5,
+   "wall_ms": 659.8521249998157
+  },
+  {
+   "system": "bm25",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 611,
+   "completion_tokens": 6,
+   "wall_ms": 2641.0797500002445
+  },
+  {
+   "system": "bm25",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 100,
+   "completion_tokens": 3,
+   "wall_ms": 511.3249169999108
+  },
+  {
+   "system": "bm25",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 671,
+   "completion_tokens": 4,
+   "wall_ms": 2744.8934579997513
+  },
+  {
+   "system": "bm25",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 586,
+   "completion_tokens": 2,
+   "wall_ms": 2265.4397910000625
+  },
+  {
+   "system": "bm25",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 107,
+   "completion_tokens": 3,
+   "wall_ms": 496.2770410002122
+  },
+  {
+   "system": "bm25",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 561,
+   "completion_tokens": 4,
+   "wall_ms": 2467.654124999626
+  },
+  {
+   "system": "bm25",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 476,
+   "completion_tokens": 4,
+   "wall_ms": 1954.85620799991
+  },
+  {
+   "system": "bm25",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 97,
+   "completion_tokens": 3,
+   "wall_ms": 575.9722920001877
+  },
+  {
+   "system": "bm25",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 676,
+   "completion_tokens": 4,
+   "wall_ms": 2791.859832999762
+  },
+  {
+   "system": "bm25",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 487,
+   "completion_tokens": 6,
+   "wall_ms": 2002.1894579999753
+  },
+  {
+   "system": "bm25",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 102,
+   "completion_tokens": 3,
+   "wall_ms": 552.0447910002986
+  },
+  {
+   "system": "bm25",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 695,
+   "completion_tokens": 26,
+   "wall_ms": 3911.5374169996358
+  },
+  {
+   "system": "bm25",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 139,
+   "completion_tokens": 4,
+   "wall_ms": 649.2798750000475
+  },
+  {
+   "system": "bm25",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 442,
+   "completion_tokens": 4,
+   "wall_ms": 1880.1363339998716
+  },
+  {
+   "system": "bm25",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 104,
+   "completion_tokens": 3,
+   "wall_ms": 454.8314999997274
+  },
+  {
+   "system": "bm25",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 584,
+   "completion_tokens": 4,
+   "wall_ms": 2445.9265829996184
+  },
+  {
+   "system": "bm25",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 496,
+   "completion_tokens": 8,
+   "wall_ms": 2145.0508330003686
+  },
+  {
+   "system": "bm25",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 105,
+   "completion_tokens": 3,
+   "wall_ms": 513.427374999992
+  },
+  {
+   "system": "bm25",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 609,
+   "completion_tokens": 13,
+   "wall_ms": 2889.135042000362
+  },
+  {
+   "system": "bm25",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 111,
+   "completion_tokens": 4,
+   "wall_ms": 523.6300420001498
+  },
+  {
+   "system": "bm25",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 556,
+   "completion_tokens": 4,
+   "wall_ms": 2346.359332999782
+  },
+  {
+   "system": "bm25",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 636,
+   "completion_tokens": 5,
+   "wall_ms": 2422.292875000039
+  },
+  {
+   "system": "bm25",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 103,
+   "completion_tokens": 3,
+   "wall_ms": 502.83891599974595
+  },
+  {
+   "system": "bm25",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 495,
+   "completion_tokens": 4,
+   "wall_ms": 2083.1433329999527
+  },
+  {
+   "system": "bm25",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 115,
+   "completion_tokens": 5,
+   "wall_ms": 566.3529999997081
+  },
+  {
+   "system": "bm25",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 482,
+   "completion_tokens": 3,
+   "wall_ms": 1969.2544999998063
+  },
+  {
+   "system": "bm25",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 97,
+   "completion_tokens": 3,
+   "wall_ms": 471.67320900007326
+  },
+  {
+   "system": "bm25",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 521,
+   "completion_tokens": 4,
+   "wall_ms": 2128.6296660000517
+  },
+  {
+   "system": "bm25",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 517,
+   "completion_tokens": 4,
+   "wall_ms": 2008.1755410001279
+  },
+  {
+   "system": "bm25",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 479,
+   "completion_tokens": 4,
+   "wall_ms": 1757.7183749999676
+  }
+ ]
+}

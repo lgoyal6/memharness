@@ -1,0 +1,95 @@
+# memharness - every knob that can move a number lives in this file.
+# Nothing below is hardcoded in the Python. Change a value here, rerun, get a
+# different table. That is the whole point of the harness.
+
+run:
+  label: locomo-conv26-n50
+  seed: 20260814
+  out_dir: results
+
+dataset:
+  name: locomo                      # snap-research/locomo, data/locomo10.json
+  path: ../work/data/locomo10.json
+  sha256_expected: "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4"
+  conversation_ids: ["conv-26"]
+  exclude_categories: [5]           # LoCoMo cat 5 has no `answer` field (adversarial);
+                                    # Mem0's and Zep's published evals both drop it.
+  n_questions: 50
+  sample: stratified                # stratified | first | random
+
+backend:
+  provider: ollama                  # everything runs locally; $0 spent
+  base_url: http://127.0.0.1:11434
+
+models:
+  # The SAME answering model and the SAME judge are used for every system.
+  # That equality is the only reason the columns are comparable.
+  answer:
+    model: llama3.1:8b
+    temperature: 0.0
+    num_predict: 96
+    seed: 20260814
+  judge:
+    model: llama3.1:8b
+    temperature: 0.0
+    num_predict: 6
+    seed: 20260814
+  memory_llm:                       # used by mem0 for fact extraction / update decisions
+    model: llama3.1:8b
+    temperature: 0.0
+  embedder:
+    model: nomic-embed-text
+    dims: 768
+
+retrieval:
+  top_k: 10                         # identical for every retrieval-based system
+  recency_turns: 20                 # size of the naive-recency window, in turns
+
+systems: [full_context, recency_window, bm25, mem0]
+
+mem0:
+  # Role mapping is an explicit knob because it is exactly the kind of choice that
+  # silently changes a competitor's score in a head-to-head. Written down, not buried.
+  role_mapping: speaker_alternating # speaker_alternating | all_user
+  prefix_speaker_name: true         # keep "Caroline:" in the text so identity survives
+  include_session_date: true        # same date material every other system gets
+  infer: true                       # mem0's LLM extraction path (its default)
+  vector_store_path: ../work/qdrant_run
+
+prompts:
+  # One answer prompt. One judge prompt. Applied verbatim to every system.
+  answer: |
+    You are answering a question about a long-running conversation between {speaker_a} and {speaker_b}.
+    Use ONLY the context below. If the context does not contain the answer, reply exactly: NO ANSWER
+    Answer with as few words as possible: a name, a date, or a short phrase. Do not explain.
+
+    CONTEXT:
+    {context}
+
+    QUESTION: {question}
+    SHORT ANSWER:
+  judge: |
+    You are grading one short answer against the gold answer.
+    Mark CORRECT if the prediction conveys the same fact as the gold answer, even if worded
+    differently, abbreviated, or padded with extra words. Otherwise mark INCORRECT.
+
+    QUESTION: {question}
+    GOLD: {gold}
+    PREDICTION: {prediction}
+
+    Reply with exactly one word: CORRECT or INCORRECT.
+
+scoring:
+  primary: llm_judge                # llm_judge | deterministic  (both are always computed)
+  deterministic_f1_threshold: 0.5   # token-F1 above this counts as correct
+
+pricing:
+  # DERIVED, NOT MEASURED. Token counts in the results table are real, measured
+  # locally from Ollama's prompt_eval_count / eval_count on every call, including
+  # the calls mem0 makes internally. Dollars are those token counts multiplied by
+  # this price sheet. Swap in your own sheet and the $ column re-prices itself.
+  sheet_name: "gpt-4o-mini + text-embedding-3-small list price"
+  source_note: "Read from https://developers.openai.com/api/docs/pricing on 2026-08-14. A price sheet is a config input, not a measurement. Re-check it before quoting the $ column."
+  input_per_mtok: 0.15
+  output_per_mtok: 0.60
+  embed_per_mtok: 0.02

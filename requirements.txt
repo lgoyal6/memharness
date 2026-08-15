@@ -1,0 +1,13 @@
+# Exact versions the published run used (Python 3.12.14, macOS arm64, 2026-08-14).
+# Install with:  VIRTUAL_ENV=work/.venv uv pip install -r memharness/requirements.txt
+# plus:          work/.venv/bin/python -m spacy download en_core_web_sm
+#
+# The published run deliberately did NOT install mem0ai[extras]: its fastembed model
+# download stalled offline, so Mem0 was measured dense-only. To enable Mem0's hybrid
+# keyword path, add `mem0ai[extras]` and rerun without HF_HUB_OFFLINE=1.
+mem0ai[nlp]==2.0.18
+ollama==0.6.2
+qdrant-client==1.19.0
+spacy==3.8.15
+rank-bm25==0.2.2
+PyYAML==6.0.3

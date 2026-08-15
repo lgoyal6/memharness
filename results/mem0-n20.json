@@ -1,0 +1,1592 @@
+{
+ "label": "mem0-n20",
+ "generated_utc": "2026-08-14T18:59:57Z",
+ "dataset": {
+  "path": "/Users/lakshgoyal/build-pipeline/outputs/builds/naive-mem0/work/data/locomo10.json",
+  "sha256": "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4",
+  "turns": 419,
+  "questions_used": 20,
+  "questions_eligible": 152
+ },
+ "config": {
+  "run": {
+   "label": "mem0-n20",
+   "seed": 20260814,
+   "out_dir": "results"
+  },
+  "dataset": {
+   "name": "locomo",
+   "path": "../work/data/locomo10.json",
+   "sha256_expected": "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4",
+   "conversation_ids": [
+    "conv-26"
+   ],
+   "exclude_categories": [
+    5
+   ],
+   "n_questions": 20,
+   "sample": "stratified"
+  },
+  "backend": {
+   "provider": "ollama",
+   "base_url": "http://127.0.0.1:11434"
+  },
+  "models": {
+   "answer": {
+    "model": "llama3.1:8b",
+    "temperature": 0.0,
+    "num_predict": 96,
+    "seed": 20260814
+   },
+   "judge": {
+    "model": "llama3.1:8b",
+    "temperature": 0.0,
+    "num_predict": 6,
+    "seed": 20260814
+   },
+   "memory_llm": {
+    "model": "llama3.1:8b",
+    "temperature": 0.0
+   },
+   "embedder": {
+    "model": "nomic-embed-text",
+    "dims": 768
+   }
+  },
+  "retrieval": {
+   "top_k": 10,
+   "recency_turns": 20
+  },
+  "systems": [
+   "mem0"
+  ],
+  "mem0": {
+   "role_mapping": "speaker_alternating",
+   "prefix_speaker_name": true,
+   "include_session_date": true,
+   "infer": true,
+   "vector_store_path": "../work/qdrant_run"
+  },
+  "prompts": {
+   "answer": "You are answering a question about a long-running conversation between {speaker_a} and {speaker_b}.\nUse ONLY the context below. If the context does not contain the answer, reply exactly: NO ANSWER\nAnswer with as few words as possible: a name, a date, or a short phrase. Do not explain.\n\nCONTEXT:\n{context}\n\nQUESTION: {question}\nSHORT ANSWER:\n",
+   "judge": "You are grading one short answer against the gold answer.\nMark CORRECT if the prediction conveys the same fact as the gold answer, even if worded\ndifferently, abbreviated, or padded with extra words. Otherwise mark INCORRECT.\n\nQUESTION: {question}\nGOLD: {gold}\nPREDICTION: {prediction}\n\nReply with exactly one word: CORRECT or INCORRECT.\n"
+  },
+  "scoring": {
+   "primary": "llm_judge",
+   "deterministic_f1_threshold": 0.5
+  },
+  "pricing": {
+   "sheet_name": "gpt-4o-mini + text-embedding-3-small list price",
+   "source_note": "Read from https://developers.openai.com/api/docs/pricing on 2026-08-14. A price sheet is a config input, not a measurement. Re-check it before quoting the $ column.",
+   "input_per_mtok": 0.15,
+   "output_per_mtok": 0.6,
+   "embed_per_mtok": 0.02
+  }
+ },
+ "summary": {
+  "mem0": {
+   "n": 20,
+   "accuracy_llm_judge": 0.65,
+   "accuracy_deterministic": 0.3,
+   "solved_llm_judge": 13,
+   "solved_deterministic": 6,
+   "mean_token_f1": 0.24955229955229957,
+   "ingest_wall_s": 791.0606806250003,
+   "ingest_llm_calls": 60,
+   "ingest_prompt_tokens": 61705,
+   "ingest_completion_tokens": 14745,
+   "query_prompt_tokens": 5922,
+   "query_completion_tokens": 117,
+   "mean_context_chars": 956.1,
+   "p50_query_ms": 1204.3150829999831,
+   "p95_query_ms": 1505.913249999594,
+   "p50_retrieve_ms": 76.66445800032307,
+   "p95_retrieve_ms": 97.69204099984563,
+   "tokens_per_solved_task": 6345.307692307692,
+   "usd_ingest_DERIVED": 0.015144599999999998,
+   "usd_query_total_DERIVED": 0.00090585,
+   "usd_per_solved_task_DERIVED": 0.00123465
+  }
+ },
+ "per_question": {
+  "mem0": [
+   {
+    "question": "What are some changes Caroline has faced during her transition journey?",
+    "category": 1,
+    "gold": "Changes to her body, losing unsupportive friends",
+    "prediction": "NO ANSWER",
+    "context_chars": 1017,
+    "retrieve_ms": 92.5849999998718,
+    "answer_ms": 1413.3282499997222,
+    "query_ms": 1505.913249999594,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "When is Melanie's daughter's birthday?",
+    "category": 2,
+    "gold": "13 August",
+    "prediction": "NO ANSWER",
+    "context_chars": 995,
+    "retrieve_ms": 58.11562500002765,
+    "answer_ms": 1082.1521670000038,
+    "query_ms": 1140.2677920000315,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "Would Caroline want to move back to her home country soon?",
+    "category": 3,
+    "gold": "No; she's in the process of adopting children.",
+    "prediction": "NO ANSWER",
+    "context_chars": 878,
+    "retrieve_ms": 88.36408300021503,
+    "answer_ms": 1096.7995839996547,
+    "query_ms": 1185.1636669998697,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "What kind of pot did Mel and her kids make with clay?",
+    "category": 4,
+    "gold": "a cup with a dog face on it",
+    "prediction": "Pots.",
+    "context_chars": 889,
+    "retrieve_ms": 56.48825000025681,
+    "answer_ms": 1085.4420000000573,
+    "query_ms": 1141.9302500003141,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "How many children does Melanie have?",
+    "category": 1,
+    "gold": "3",
+    "prediction": "Melanie has kids.",
+    "context_chars": 937,
+    "retrieve_ms": 76.66445800032307,
+    "answer_ms": 1148.004624999885,
+    "query_ms": 1224.669083000208,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "When did Melanie get hurt?",
+    "category": 2,
+    "gold": "September 2023",
+    "prediction": "Last month.",
+    "context_chars": 995,
+    "retrieve_ms": 66.86345799971605,
+    "answer_ms": 1098.3186660000683,
+    "query_ms": 1165.1821239997844,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "Would Caroline still want to pursue counseling as a career if she hadn't received support growing up?",
+    "category": 3,
+    "gold": "Likely no",
+    "prediction": "NO ANSWER",
+    "context_chars": 912,
+    "retrieve_ms": 80.48233299996355,
+    "answer_ms": 1013.8961249999738,
+    "query_ms": 1094.3784579999374,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "What activity did Caroline used to do with her dad?",
+    "category": 4,
+    "gold": "Horseback riding",
+    "prediction": "Horseback riding.",
+    "context_chars": 955,
+    "retrieve_ms": 50.48970799998642,
+    "answer_ms": 1153.8253749999967,
+    "query_ms": 1204.3150829999831,
+    "deterministic_correct": true,
+    "token_f1": 1.0,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "In what ways is Caroline participating in the LGBTQ community?",
+    "category": 1,
+    "gold": "Joining activist group, going to pride parades, participating in an art show, mentoring program",
+    "prediction": "Joining activist group, mentorship program, conference, art show, pride parade, adoption agency, support group.",
+    "context_chars": 868,
+    "retrieve_ms": 90.29104199998983,
+    "answer_ms": 1705.1612499999464,
+    "query_ms": 1795.4522919999363,
+    "deterministic_correct": true,
+    "token_f1": 0.5185185185185186,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "When did Melanie run a charity race?",
+    "category": 2,
+    "gold": "The sunday before 25 May 2023",
+    "prediction": "Last Saturday.",
+    "context_chars": 1082,
+    "retrieve_ms": 78.4326670000155,
+    "answer_ms": 1207.0345409997572,
+    "query_ms": 1285.4672079997727,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "Would Melanie be more interested in going to a national park or a theme park?",
+    "category": 3,
+    "gold": "National park; she likes the outdoors",
+    "prediction": "National Park.",
+    "context_chars": 1040,
+    "retrieve_ms": 78.22099999975762,
+    "answer_ms": 1391.6140000001178,
+    "query_ms": 1469.8349999998754,
+    "deterministic_correct": true,
+    "token_f1": 0.5714285714285715,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "What did Caroline find in her neighborhood during her walk?",
+    "category": 4,
+    "gold": "a rainbow sidewalk",
+    "prediction": "The parade.",
+    "context_chars": 853,
+    "retrieve_ms": 66.8693330003407,
+    "answer_ms": 968.0982499999118,
+    "query_ms": 1034.9675830002525,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "What LGBTQ+ events has Caroline participated in?",
+    "category": 1,
+    "gold": "Pride parade, school speech, support group",
+    "prediction": "Pride parade, conference, support group, art show.",
+    "context_chars": 868,
+    "retrieve_ms": 88.73499999981505,
+    "answer_ms": 1315.7055840001703,
+    "query_ms": 1404.4405839999854,
+    "deterministic_correct": true,
+    "token_f1": 0.6153846153846153,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "When did Caroline and Melanie go to a pride fesetival together?",
+    "category": 2,
+    "gold": "2022",
+    "prediction": "Last year.",
+    "context_chars": 829,
+    "retrieve_ms": 105.69737499963594,
+    "answer_ms": 961.8177910001577,
+    "query_ms": 1067.5151659997937,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "What fields would Caroline be likely to pursue in her educaton?",
+    "category": 3,
+    "gold": "Psychology, counseling certification",
+    "prediction": "Counseling or mental health.",
+    "context_chars": 944,
+    "retrieve_ms": 66.00462500000503,
+    "answer_ms": 1213.965083000403,
+    "query_ms": 1279.969708000408,
+    "deterministic_correct": false,
+    "token_f1": 0.28571428571428575,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "What kind of painting did Caroline share with Melanie on October 13, 2023?",
+    "category": 4,
+    "gold": "An abstract painting with blue streaks on a wall.",
+    "prediction": "NO ANSWER",
+    "context_chars": 924,
+    "retrieve_ms": 97.69204099984563,
+    "answer_ms": 1060.6321249997563,
+    "query_ms": 1158.324165999602,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": false
+   },
+   {
+    "question": "What does Melanie do to destress?",
+    "category": 1,
+    "gold": "Running, pottery",
+    "prediction": "Pottery.",
+    "context_chars": 1157,
+    "retrieve_ms": 54.3475419999595,
+    "answer_ms": 1181.9267500000024,
+    "query_ms": 1236.2742919999619,
+    "deterministic_correct": true,
+    "token_f1": 0.6666666666666666,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "When did Melanie's friend adopt a child?",
+    "category": 2,
+    "gold": "2022",
+    "prediction": "Last year.",
+    "context_chars": 909,
+    "retrieve_ms": 64.89570799976718,
+    "answer_ms": 943.8287910002146,
+    "query_ms": 1008.7244989999817,
+    "deterministic_correct": false,
+    "token_f1": 0.0,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "Would Melanie likely enjoy the song \"The Four Seasons\" by Vivaldi?",
+    "category": 3,
+    "gold": "Yes; it's classical music",
+    "prediction": "YES",
+    "context_chars": 1101,
+    "retrieve_ms": 69.71929200017257,
+    "answer_ms": 1102.7225829998315,
+    "query_ms": 1172.441875000004,
+    "deterministic_correct": false,
+    "token_f1": 0.33333333333333337,
+    "llm_judge_correct": true
+   },
+   {
+    "question": "What was Melanie's favorite book from her childhood?",
+    "category": 4,
+    "gold": "\"Charlotte's Web\"",
+    "prediction": "'Charlotte's Web'",
+    "context_chars": 969,
+    "retrieve_ms": 68.77145799990103,
+    "answer_ms": 1383.1340420001652,
+    "query_ms": 1451.9055000000662,
+    "deterministic_correct": true,
+    "token_f1": 1.0,
+    "llm_judge_correct": true
+   }
+  ]
+ },
+ "calls": [
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 666,
+   "completion_tokens": 0,
+   "wall_ms": 390.1303749998988
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 419,
+   "wall_ms": 27320.399583999915
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 216,
+   "completion_tokens": 0,
+   "wall_ms": 132.15737500013347
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 50,
+   "completion_tokens": 0,
+   "wall_ms": 77.17270800003462
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 886,
+   "completion_tokens": 0,
+   "wall_ms": 105.80229199968016
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 297,
+   "wall_ms": 19743.24612500004
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 172,
+   "completion_tokens": 0,
+   "wall_ms": 375.018917000034
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 48,
+   "completion_tokens": 0,
+   "wall_ms": 72.48762499966688
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 1357,
+   "completion_tokens": 0,
+   "wall_ms": 160.40574999988166
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 372,
+   "wall_ms": 26710.238584000308
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 965,
+   "completion_tokens": 0,
+   "wall_ms": 150.52504100003716
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 2000,
+   "wall_ms": 96680.96091699999
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 757,
+   "completion_tokens": 0,
+   "wall_ms": 143.41495799999393
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 306,
+   "wall_ms": 20891.035125000144
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 156,
+   "completion_tokens": 0,
+   "wall_ms": 88.24008299961861
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 40,
+   "completion_tokens": 0,
+   "wall_ms": 62.042417000157
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 763,
+   "completion_tokens": 0,
+   "wall_ms": 83.3260419999533
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 277,
+   "wall_ms": 18328.8235
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 145,
+   "completion_tokens": 0,
+   "wall_ms": 85.52841699975033
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 44,
+   "completion_tokens": 0,
+   "wall_ms": 70.4394169997613
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 1287,
+   "completion_tokens": 0,
+   "wall_ms": 140.29316699998162
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 301,
+   "wall_ms": 21644.679582999743
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 71,
+   "completion_tokens": 0,
+   "wall_ms": 74.6921250001833
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 12,
+   "completion_tokens": 0,
+   "wall_ms": 29.247375000068132
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 1661,
+   "completion_tokens": 0,
+   "wall_ms": 191.17374999996173
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 2000,
+   "wall_ms": 92877.39479099991
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 755,
+   "completion_tokens": 0,
+   "wall_ms": 93.66879199978939
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 497,
+   "wall_ms": 28125.156999999945
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 252,
+   "completion_tokens": 0,
+   "wall_ms": 113.470000000234
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 73,
+   "completion_tokens": 0,
+   "wall_ms": 100.73775000000751
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 1179,
+   "completion_tokens": 0,
+   "wall_ms": 128.42716600016502
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 194,
+   "wall_ms": 15587.088125000264
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 118,
+   "completion_tokens": 0,
+   "wall_ms": 74.46875000005093
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 40,
+   "completion_tokens": 0,
+   "wall_ms": 65.79958399970565
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 888,
+   "completion_tokens": 0,
+   "wall_ms": 97.0982499998172
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 194,
+   "wall_ms": 16601.464290999957
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 90,
+   "completion_tokens": 0,
+   "wall_ms": 73.1612499998846
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 37,
+   "completion_tokens": 0,
+   "wall_ms": 62.17095900001368
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 985,
+   "completion_tokens": 0,
+   "wall_ms": 107.58824999993521
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 712,
+   "wall_ms": 36394.15608399986
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 369,
+   "completion_tokens": 0,
+   "wall_ms": 334.1483750000407
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 49,
+   "completion_tokens": 0,
+   "wall_ms": 92.77474999998958
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 919,
+   "completion_tokens": 0,
+   "wall_ms": 96.52837500016176
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 403,
+   "wall_ms": 24168.464916000175
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 177,
+   "completion_tokens": 0,
+   "wall_ms": 93.70000000035361
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 41,
+   "completion_tokens": 0,
+   "wall_ms": 64.17533300009381
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 1639,
+   "completion_tokens": 0,
+   "wall_ms": 179.8338749999857
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 32,
+   "wall_ms": 9094.090667000273
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 1291,
+   "completion_tokens": 0,
+   "wall_ms": 156.35824999981196
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 2000,
+   "wall_ms": 91418.39233300016
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 1168,
+   "completion_tokens": 0,
+   "wall_ms": 137.73354100021606
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 1954,
+   "wall_ms": 94709.6247909999
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 1336,
+   "completion_tokens": 0,
+   "wall_ms": 197.68662500018763
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 636,
+   "wall_ms": 35143.609625000405
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 1045,
+   "completion_tokens": 0,
+   "wall_ms": 134.51529099984327
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 1771,
+   "wall_ms": 83706.65308300022
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 797,
+   "completion_tokens": 0,
+   "wall_ms": 141.12149999982648
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 2050,
+   "completion_tokens": 380,
+   "wall_ms": 23598.84662500008
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 176,
+   "completion_tokens": 0,
+   "wall_ms": 99.4572499998867
+  },
+  {
+   "system": "mem0",
+   "stage": "ingest",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 35,
+   "completion_tokens": 0,
+   "wall_ms": 64.15749999996478
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 14,
+   "completion_tokens": 0,
+   "wall_ms": 29.53604100002849
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 7,
+   "completion_tokens": 0,
+   "wall_ms": 24.371165999582445
+  },
+  {
+   "system": "mem0",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 280,
+   "completion_tokens": 4,
+   "wall_ms": 1412.0184170001266
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 12,
+   "completion_tokens": 0,
+   "wall_ms": 22.780332999900565
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 3,
+   "completion_tokens": 0,
+   "wall_ms": 23.137583999869094
+  },
+  {
+   "system": "mem0",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 284,
+   "completion_tokens": 4,
+   "wall_ms": 1081.782000000203
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 14,
+   "completion_tokens": 0,
+   "wall_ms": 31.496625000272616
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 7,
+   "completion_tokens": 0,
+   "wall_ms": 23.18654200007586
+  },
+  {
+   "system": "mem0",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 262,
+   "completion_tokens": 4,
+   "wall_ms": 1096.7558750003263
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 15,
+   "completion_tokens": 0,
+   "wall_ms": 24.13162499988175
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 3,
+   "completion_tokens": 0,
+   "wall_ms": 19.481792000078713
+  },
+  {
+   "system": "mem0",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 269,
+   "completion_tokens": 4,
+   "wall_ms": 1085.4164580000543
+  },
+  {
+   "system": "mem0",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 108,
+   "completion_tokens": 5,
+   "wall_ms": 625.5860410001333
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 9,
+   "completion_tokens": 0,
+   "wall_ms": 31.917750000047818
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 3,
+   "completion_tokens": 0,
+   "wall_ms": 29.843541999980516
+  },
+  {
+   "system": "mem0",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 271,
+   "completion_tokens": 6,
+   "wall_ms": 1147.9732499997226
+  },
+  {
+   "system": "mem0",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 97,
+   "completion_tokens": 3,
+   "wall_ms": 479.32370899980015
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 8,
+   "completion_tokens": 0,
+   "wall_ms": 35.14529200037941
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 3,
+   "completion_tokens": 0,
+   "wall_ms": 23.032374999729655
+  },
+  {
+   "system": "mem0",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 287,
+   "completion_tokens": 4,
+   "wall_ms": 1098.2856249997894
+  },
+  {
+   "system": "mem0",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 97,
+   "completion_tokens": 3,
+   "wall_ms": 455.3394159997879
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 22,
+   "completion_tokens": 0,
+   "wall_ms": 25.57058299998971
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 3,
+   "completion_tokens": 0,
+   "wall_ms": 19.00400000022273
+  },
+  {
+   "system": "mem0",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 267,
+   "completion_tokens": 4,
+   "wall_ms": 1013.7829999998758
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 13,
+   "completion_tokens": 0,
+   "wall_ms": 22.175167000114016
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 3,
+   "completion_tokens": 0,
+   "wall_ms": 17.83620800006247
+  },
+  {
+   "system": "mem0",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 272,
+   "completion_tokens": 6,
+   "wall_ms": 1153.8030420001633
+  },
+  {
+   "system": "mem0",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 102,
+   "completion_tokens": 3,
+   "wall_ms": 471.5289999999186
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 14,
+   "completion_tokens": 0,
+   "wall_ms": 34.139000000322994
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 12,
+   "completion_tokens": 0,
+   "wall_ms": 31.29087500019523
+  },
+  {
+   "system": "mem0",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 255,
+   "completion_tokens": 24,
+   "wall_ms": 1705.1176250001845
+  },
+  {
+   "system": "mem0",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 137,
+   "completion_tokens": 4,
+   "wall_ms": 602.9542080000283
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 10,
+   "completion_tokens": 0,
+   "wall_ms": 34.45720899981097
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 7,
+   "completion_tokens": 0,
+   "wall_ms": 26.72687499989479
+  },
+  {
+   "system": "mem0",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 303,
+   "completion_tokens": 4,
+   "wall_ms": 1207.0160000002943
+  },
+  {
+   "system": "mem0",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 104,
+   "completion_tokens": 3,
+   "wall_ms": 454.34016700028224
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 18,
+   "completion_tokens": 0,
+   "wall_ms": 31.018166999729146
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 11,
+   "completion_tokens": 0,
+   "wall_ms": 30.79033400035769
+  },
+  {
+   "system": "mem0",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 298,
+   "completion_tokens": 4,
+   "wall_ms": 1391.5921669999989
+  },
+  {
+   "system": "mem0",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 110,
+   "completion_tokens": 3,
+   "wall_ms": 457.0192500000303
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 13,
+   "completion_tokens": 0,
+   "wall_ms": 30.00091700005214
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 3,
+   "completion_tokens": 0,
+   "wall_ms": 25.930333999895083
+  },
+  {
+   "system": "mem0",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 253,
+   "completion_tokens": 4,
+   "wall_ms": 968.0726669998876
+  },
+  {
+   "system": "mem0",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 101,
+   "completion_tokens": 5,
+   "wall_ms": 562.5833750000311
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 12,
+   "completion_tokens": 0,
+   "wall_ms": 26.336750000155007
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 14,
+   "completion_tokens": 0,
+   "wall_ms": 31.949249999797757
+  },
+  {
+   "system": "mem0",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 253,
+   "completion_tokens": 13,
+   "wall_ms": 1315.64358300011
+  },
+  {
+   "system": "mem0",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 112,
+   "completion_tokens": 4,
+   "wall_ms": 515.7176669999899
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 17,
+   "completion_tokens": 0,
+   "wall_ms": 35.19408400006796
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 13,
+   "completion_tokens": 0,
+   "wall_ms": 45.03216600005544
+  },
+  {
+   "system": "mem0",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 258,
+   "completion_tokens": 4,
+   "wall_ms": 961.7816250001852
+  },
+  {
+   "system": "mem0",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 105,
+   "completion_tokens": 3,
+   "wall_ms": 468.0697919998238
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 16,
+   "completion_tokens": 0,
+   "wall_ms": 29.16624999988926
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 3,
+   "completion_tokens": 0,
+   "wall_ms": 20.232916999702866
+  },
+  {
+   "system": "mem0",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 265,
+   "completion_tokens": 8,
+   "wall_ms": 1213.764041000104
+  },
+  {
+   "system": "mem0",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 106,
+   "completion_tokens": 3,
+   "wall_ms": 486.67804200022147
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 18,
+   "completion_tokens": 0,
+   "wall_ms": 42.21770899994226
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 9,
+   "completion_tokens": 0,
+   "wall_ms": 31.351707999874634
+  },
+  {
+   "system": "mem0",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 272,
+   "completion_tokens": 4,
+   "wall_ms": 1060.5920000002698
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 11,
+   "completion_tokens": 0,
+   "wall_ms": 24.330749999990076
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 3,
+   "completion_tokens": 0,
+   "wall_ms": 19.25858300000982
+  },
+  {
+   "system": "mem0",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 312,
+   "completion_tokens": 4,
+   "wall_ms": 1181.9104579999475
+  },
+  {
+   "system": "mem0",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 98,
+   "completion_tokens": 3,
+   "wall_ms": 450.89283299967065
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 12,
+   "completion_tokens": 0,
+   "wall_ms": 33.39595800025563
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 3,
+   "completion_tokens": 0,
+   "wall_ms": 22.732041999915964
+  },
+  {
+   "system": "mem0",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 261,
+   "completion_tokens": 4,
+   "wall_ms": 943.8083750001169
+  },
+  {
+   "system": "mem0",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 99,
+   "completion_tokens": 3,
+   "wall_ms": 469.6974590001446
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 18,
+   "completion_tokens": 0,
+   "wall_ms": 22.525041999870155
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 13,
+   "completion_tokens": 0,
+   "wall_ms": 28.103834000376082
+  },
+  {
+   "system": "mem0",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 313,
+   "completion_tokens": 2,
+   "wall_ms": 1102.6831669996682
+  },
+  {
+   "system": "mem0",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 108,
+   "completion_tokens": 3,
+   "wall_ms": 468.89208300035534
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 13,
+   "completion_tokens": 0,
+   "wall_ms": 32.144709000021976
+  },
+  {
+   "system": "mem0",
+   "stage": "retrieve",
+   "kind": "embed",
+   "model": "nomic-embed-text",
+   "prompt_tokens": 3,
+   "completion_tokens": 0,
+   "wall_ms": 22.541875000115397
+  },
+  {
+   "system": "mem0",
+   "stage": "answer",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 282,
+   "completion_tokens": 6,
+   "wall_ms": 1383.0494170001657
+  },
+  {
+   "system": "mem0",
+   "stage": "judge",
+   "kind": "chat",
+   "model": "llama3.1:8b",
+   "prompt_tokens": 103,
+   "completion_tokens": 3,
+   "wall_ms": 518.8736670002072
+  }
+ ]
+}

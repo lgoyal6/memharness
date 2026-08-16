@@ -55,19 +55,56 @@ conversation, against 6,039 tokens for all twenty questions combined. Per-retrie
 describe the small half of the bill. This is not a criticism of the number, it is a
 different number that nobody publishes.
 
-Where it lands, on a dollars-per-solved-task basis against BM25:
+#### In dollars
+
+Token counts above are **measured**. Dollars are **derived**: those counts multiplied by a
+price sheet that lives in `config.yaml` and can be swapped for your own. The sheet used here
+is gpt-4o-mini plus text-embedding-3-small list price, read 2026-08-14: $0.15 / Mtok input,
+$0.60 / Mtok output, $0.02 / Mtok embedding. A price sheet is a config input, not a finding.
+
+| system | ingest $ | query $ (20 q) | total $ | $ / solved task |
+|---|---:|---:|---:|---:|
+| full context | 0.000000 | 0.006820 | 0.006820 | 0.001137 |
+| recency window | 0.000000 | 0.003237 | 0.003237 | 0.001619 |
+| BM25 | 0.000000 | 0.001753 | 0.001753 | **0.000175** |
+| mem0 | **0.015145** | 0.000906 | 0.016051 | 0.001235 |
+
+**At the size actually run, mem0 cost 9.2x what BM25 cost in total**, and 7x more per solved
+task, entirely because of the fixed ingest charge. That reverses at volume, which is the
+whole point of the crossover.
+
+#### Where the crossover sits
+
+Two ways to compute it, because they disagree and the disagreement is informative.
+
+**On tokens alone**, ignoring that the systems differ in accuracy:
 
 ```
-mem0 fixed cost      76,450 tokens, paid once per conversation
-mem0 marginal          302 tokens per question   (BM25: 565)
-crossover           ~220 questions asked against that same conversation
+mem0 fixed      76,450 tokens, paid once for the conversation
+mem0 marginal      302 tokens per question
+BM25 marginal      565 tokens per question
+saving             263 tokens per question
+crossover      76,450 / 263  =  ~291 questions
 ```
 
-Under roughly 220 questions per conversation, the retrieval saving is real and the total is
-not. Over it, mem0 wins and keeps winning. **The number that decides which regime a buyer is
-in has not been published by anyone, including mem0.** A support product answering four
-questions per ticket and a research agent interrogating one corpus for a month sit on
-opposite sides of that line, and today they read the same marketing page.
+**On dollars per solved task**, which credits mem0 for answering more of them:
+
+```
+mem0 marginal   $0.0000453/q ÷ 0.65 = $0.0000697 per solved task
+BM25 marginal   $0.0000877/q ÷ 0.50 = $0.0001754 per solved task
+saving                                $0.0001057 per solved task
+crossover       $0.0151446 / $0.0001057 = ~143 solved  =  ~220 questions
+```
+
+So the crossover lands somewhere around **220 to 290 questions** against one conversation,
+and which end you believe depends on whether you trust the accuracy gap. **At n=20 you should
+not**, which is exactly why both numbers are here rather than the flattering one alone. The
+token figure is the more robust of the two because it depends on nothing that was judged.
+
+Below that band the retrieval saving is real and the total is not. Above it mem0 wins and
+keeps winning. **Nobody has published where that band sits, including mem0.** A support
+product answering four questions per ticket and a research agent interrogating one corpus
+for a month sit on opposite sides of it, and today they read the same marketing page.
 
 **4. Retrieval is 76.66 ms at p50 and 97.69 ms at p95, against BM25's 0.97 ms.** Roughly
 **79x**. mem0's research page reports that median latency "stays flat at +1 ms", which

@@ -5,10 +5,51 @@ file and is applied identically to every system, plus a token meter that counts 
 memory system spends **ingesting** a conversation, not only what it spends answering
 questions about it.
 
-Published comparisons in this space measure the author's own system directly and quote
-competitors from their papers. The dataset, prompt, answering model, judge and metric all
-differ across the rows being compared, so the numbers are not wrong so much as not
-comparable. This runs four systems through one pipeline with one configuration.
+---
+
+## The short version
+
+**What I noticed.** mem0's research page reports LoCoMo 92.5, and roughly 6,900 tokens per
+retrieval against 25,000+ for full context. Both are query-time numbers. But a memory system
+earns its keep by reading a conversation once and then answering cheaply forever after, and
+the reading is not free: it is an LLM extraction pass over every turn. That half of the bill
+is not on the page, and it is not on anyone else's page either.
+
+**Why I built it.** Partly to put a number on that. Partly because every comparison in this
+category measures the author's own system directly and quotes competitors from their papers,
+so the dataset, prompt, answering model, judge and metric all differ across the rows being
+compared. Those numbers are not wrong so much as not comparable, and I wanted a harness where
+they were.
+
+**How.** One `config.yaml` holds the dataset slice, prompt, answering model, temperature,
+seed, judge, top_k and role mapping, and the same file drives all four systems: mem0, BM25,
+a recency window and full context. The metering is the part that took work. mem0 does
+`from ollama import Client` at import time, so replacing `ollama.Client` afterwards catches
+nothing; the already-bound names inside `mem0.llms.ollama` and `mem0.embeddings.ollama` have
+to be rebound too. That is what makes it possible to see the calls mem0 makes *inside* its
+own extraction pipeline, and it is why published figures tend to stop at the query path.
+
+**What I found.** Reading one 419-turn conversation cost mem0 **76,450 tokens**, which is
+**12.7x what all twenty questions cost combined**. At the size I ran, that made mem0 **9.2x
+more expensive than plain keyword search in total dollars**, and it only turns in mem0's
+favour after **roughly 220 to 290 questions** asked against that same conversation. Retrieval
+also runs at **76.66 ms p50 against BM25's 0.97 ms**, about 79x, which the public latency
+figure does not cover. Two results went the other way and argue mem0's case better than its
+own page does: full context scored **0.30 against mem0's 0.65**, so memory beats
+context-stuffing on accuracy and not merely on price, and mem0 won on the **tightest context
+of anything tested**, 956 characters against BM25's 1,754.
+
+**Why it matters.** That crossover decides which product mem0 is obviously right for and
+which it is not, and nobody has published where it sits. A support tool answering four
+questions per ticket and a research agent interrogating one corpus for a month land on
+opposite sides of it and currently read the same marketing page. Separately, and beyond mem0:
+swapping the LLM judge for exact match sends full context from 0.30 to **zero** while every
+other system merely halves, so any leaderboard in this space scored by an LLM judge is
+measuring retrieval quality blended with answer style, unevenly across architectures.
+
+**What it is not.** n=20, one conversation, dense-only, local 8B weights. The accuracy column
+cannot support a ranking and is not offered as one. The cost and latency columns are counted
+rather than judged, and those are the ones to read.
 
 ---
 

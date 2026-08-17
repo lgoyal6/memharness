@@ -260,6 +260,8 @@ uv pip install --python ../work/.venv/bin/python -r requirements.txt
 cd memharness && ../work/.venv/bin/python run.py                 # defaults from config.yaml
 ../work/.venv/bin/python run.py --systems mem0 --n 152           # the full eligible set
 ../work/.venv/bin/python run.py --systems bm25,full_context      # baselines only
+
+../work/.venv/bin/python -m pytest tests -q         # 35 tests, no Ollama server needed
 ```
 
 Needs Ollama running locally with `llama3.1:8b` and `nomic-embed-text`. Change `--n` and

@@ -3,18 +3,18 @@
 # different table. That is the whole point of the harness.
 
 run:
-  label: locomo-conv26-n50
+  label: locomo-conv26-n20
   seed: 20260814
   out_dir: results
 
 dataset:
   name: locomo                      # snap-research/locomo, data/locomo10.json
-  path: ../work/data/locomo10.json
+  path: data/locomo10.json
   sha256_expected: "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4"
   conversation_ids: ["conv-26"]
   exclude_categories: [5]           # LoCoMo cat 5 has no `answer` field (adversarial);
                                     # Mem0's and Zep's published evals both drop it.
-  n_questions: 50
+  n_questions: 20
   sample: stratified                # stratified | first | random
 
 backend:
@@ -54,7 +54,7 @@ mem0:
   prefix_speaker_name: true         # keep "Caroline:" in the text so identity survives
   include_session_date: true        # same date material every other system gets
   infer: true                       # mem0's LLM extraction path (its default)
-  vector_store_path: ../work/qdrant_run
+  vector_store_path: .qdrant_run
 
 prompts:
   # One answer prompt. One judge prompt. Applied verbatim to every system.

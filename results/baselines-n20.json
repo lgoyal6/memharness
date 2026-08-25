@@ -2,7 +2,7 @@
  "label": "baselines-n20",
  "generated_utc": "2026-08-14T18:45:45Z",
  "dataset": {
-  "path": "/Users/lakshgoyal/build-pipeline/outputs/builds/naive-mem0/work/data/locomo10.json",
+  "path": "data/locomo10.json",
   "sha256": "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4",
   "turns": 419,
   "questions_used": 20,

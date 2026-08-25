@@ -55,7 +55,11 @@ rather than judged, and those are the ones to read.
 
 ## Results
 
-LoCoMo, one conversation of 419 turns, 20 questions sampled from 152 eligible.
+LoCoMo, one conversation of 419 turns, 20 questions sampled from 152 eligible. The
+dataset is not vendored here: fetch `locomo10.json` from
+[snap-research/locomo](https://github.com/snap-research/locomo) and put it at
+`data/locomo10.json`, the path `config.yaml` expects. Its SHA-256 is pinned in the
+config, so a wrong or truncated copy fails loudly rather than quietly changing a number.
 llama3.1:8b answering and judging, nomic-embed-text embedding, everything local.
 Judge is an LLM; `det` is exact-match. Seed 20260814, temperature 0.
 

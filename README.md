@@ -57,7 +57,7 @@ rather than judged, and those are the ones to read.
 
 LoCoMo, one conversation of 419 turns, 20 questions sampled from 152 eligible.
 llama3.1:8b answering and judging, nomic-embed-text embedding, everything local.
-Judge is an LLM; `det` is exact-match. Seed 0, temperature 0.
+Judge is an LLM; `det` is exact-match. Seed 20260814, temperature 0.
 
 | system | acc | det | ingest tokens | query tokens | per question | p50 retrieve | mean context |
 |---|---:|---:|---:|---:|---:|---:|---:|
@@ -154,7 +154,7 @@ concerns memory-decay operations rather than the retrieve path. For an interacti
 it is absent from the public numbers.
 
 **5. Ingest is 19 LLM calls and 41 embedding calls for one conversation**, with extraction
-output accounting for **14,745 of the 76,450 tokens**, about 27%. The extraction step writes
+output accounting for **14,745 of the 76,450 tokens**, about 19%. The extraction step writes
 a great deal relative to what it reads. The call count is architectural and holds regardless
 of which model serves it, which makes it the number that decides whether ingestion can sit
 in a request path or has to be a background job.
@@ -253,15 +253,15 @@ systems in this category cannot be independently benchmarked at all.
 ## Run it
 
 ```bash
-uv venv --python 3.12 ../work/.venv
-uv pip install --python ../work/.venv/bin/python -r requirements.txt
-../work/.venv/bin/python -m spacy download en_core_web_sm
+uv venv --python 3.12 .venv
+uv pip install --python .venv/bin/python -r requirements.txt
+.venv/bin/python -m spacy download en_core_web_sm
 
-cd memharness && ../work/.venv/bin/python run.py                 # defaults from config.yaml
-../work/.venv/bin/python run.py --systems mem0 --n 152           # the full eligible set
-../work/.venv/bin/python run.py --systems bm25,full_context      # baselines only
+.venv/bin/python run.py                             # defaults from config.yaml
+.venv/bin/python run.py --systems mem0 --n 152      # the full eligible set
+.venv/bin/python run.py --systems bm25,full_context # baselines only
 
-../work/.venv/bin/python -m pytest tests -q         # 35 tests, no Ollama server needed
+.venv/bin/python -m pytest tests -q                 # 35 tests, no Ollama server needed
 ```
 
 Needs Ollama running locally with `llama3.1:8b` and `nomic-embed-text`. Change `--n` and
@@ -282,6 +282,6 @@ everything else follows from the config.
   column would not.
 - **The judge is the same model family as the answerer**, which is a known source of bias.
   Exact match is reported alongside precisely so the judge is not the only witness.
-- **Wall-clock ingest of 782 s is model-dependent** and says more about local 8B throughput
+- **Wall-clock ingest of 791 s is model-dependent** and says more about local 8B throughput
   than about mem0. The 19 LLM calls and 41 embedding calls are the architectural figures;
   the seconds are not.

@@ -7,6 +7,9 @@ questions about it.
 
 ---
 
+**[See it: lgoyal6.github.io/memharness](https://lgoyal6.github.io/memharness/)** - drag the
+question count and watch where the extraction bill pays itself back.
+
 ## The short version
 
 **What I noticed.** mem0's research page reports LoCoMo 92.5, and roughly 6,900 tokens per

@@ -1,0 +1,90 @@
+{
+ "dataset": {
+  "path": "data/locomo10.json",
+  "sha256": "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4",
+  "turns": 419,
+  "questions_used": 20,
+  "questions_eligible": 152
+ },
+ "pricing": {
+  "sheet_name": "gpt-4o-mini + text-embedding-3-small list price",
+  "source_note": "Read from https://developers.openai.com/api/docs/pricing on 2026-08-14. A price sheet is a config input, not a measurement. Re-check it before quoting the $ column.",
+  "input_per_mtok": 0.15,
+  "output_per_mtok": 0.6,
+  "embed_per_mtok": 0.02
+ },
+ "systems": [
+  {
+   "key": "mem0",
+   "label": "mem0",
+   "n_questions": 20,
+   "ingest_tokens": 76450,
+   "ingest_usd": 0.015144599999999998,
+   "ingest_llm_calls": 60,
+   "ingest_wall_s": 791.0606806250003,
+   "per_q_tokens": 301.95,
+   "per_q_usd": 4.52925e-05,
+   "accuracy": 0.65,
+   "accuracy_strict": 0.3,
+   "solved": 13,
+   "p50_retrieve_ms": 76.66445800032307,
+   "p50_query_ms": 1204.3150829999831,
+   "mean_context_chars": 956.1,
+   "usd_per_solved": 0.00123465
+  },
+  {
+   "key": "bm25",
+   "label": "keyword search",
+   "n_questions": 20,
+   "ingest_tokens": 0,
+   "ingest_usd": 0.0,
+   "ingest_llm_calls": 0,
+   "ingest_wall_s": 0.0460304170001109,
+   "per_q_tokens": 565.1,
+   "per_q_usd": 8.766750000000001e-05,
+   "accuracy": 0.5,
+   "accuracy_strict": 0.25,
+   "solved": 10,
+   "p50_retrieve_ms": 0.96537499985061,
+   "p50_query_ms": 2347.1347499998956,
+   "mean_context_chars": 1753.95,
+   "usd_per_solved": 0.00017533500000000001
+  },
+  {
+   "key": "recency_window",
+   "label": "last N turns",
+   "n_questions": 20,
+   "ingest_tokens": 0,
+   "ingest_usd": 0.0,
+   "ingest_llm_calls": 0,
+   "ingest_wall_s": 0.0004494999998314597,
+   "per_q_tokens": 1065.2,
+   "per_q_usd": 0.00016185,
+   "accuracy": 0.1,
+   "accuracy_strict": 0.05,
+   "solved": 2,
+   "p50_retrieve_ms": 0.01608399998076493,
+   "p50_query_ms": 459.93183300015517,
+   "mean_context_chars": 3703,
+   "usd_per_solved": 0.0016185000000000001
+  },
+  {
+   "key": "full_context",
+   "label": "the whole conversation",
+   "n_questions": 20,
+   "ingest_tokens": 0,
+   "ingest_usd": 0.0,
+   "ingest_llm_calls": 0,
+   "ingest_wall_s": 1.1332999747537542e-05,
+   "per_q_tokens": 2105.85,
+   "per_q_usd": 0.00034101,
+   "accuracy": 0.3,
+   "accuracy_strict": 0.0,
+   "solved": 6,
+   "p50_retrieve_ms": 0.3295410001555865,
+   "p50_query_ms": 4563.776208000036,
+   "mean_context_chars": 73892,
+   "usd_per_solved": 0.0011367
+  }
+ ]
+}

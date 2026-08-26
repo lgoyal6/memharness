@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>memharness - the half of the memory bill nobody prints</title>
+<meta name="description" content="A memory system reads a conversation once and answers cheaply forever. The reading is an LLM pass over every turn, and it cost 12.7x what all twenty questions cost combined.">
+<meta property="og:title" content="memharness">
+<meta property="og:description" content="Published memory numbers are query-time numbers. Drag the question count and watch where mem0 actually overtakes keyword search.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="gut">
+  <div>
+    <div class="eyebrow">lgoyal6 / memharness</div>
+    <h1>memharness<span class="dot">.</span></h1>
+    <p class="thesis">
+      A memory system earns its keep by reading a conversation once and then answering
+      cheaply forever after. Published figures measure the answering. The reading is an
+      LLM extraction pass over every turn, and it is not free.
+    </p>
+    <p class="thesis">
+      <strong>Reading one 419-turn conversation cost more than twelve times what every
+      question about it cost put together.</strong> One config drives all four systems:
+      same dataset, prompt, answering model, judge and metric.
+    </p>
+  </div>
+  <dl class="facts">
+    <div class="fact"><dt>reading it once</dt><dd>76,450 <small>tokens, before any question</small></dd></div>
+    <div class="fact"><dt>all 20 questions</dt><dd>6,039 <small>tokens, together</small></dd></div>
+    <div class="fact"><dt>so it pays back after</dt><dd>221-357 <small>depending what you count</small></dd></div>
+    <div class="fact"><dt>and it is worth it</dt><dd>0.65 <small>against 0.30 for full context</small></dd></div>
+  </dl>
+</header>
+
+<section class="gut">
+  <div class="eyebrow">Figure 1</div>
+  <h2>When the memory system starts being the cheap one</h2>
+  <p class="lead">
+    Extraction is paid once, before a single question. Retrieval is paid every time. That
+    makes this an amortisation question, and the answer depends entirely on how many
+    questions you are going to ask the same conversation.
+  </p>
+
+  <div class="figure">
+    <div class="figcap">
+      <span id="cap-what">Loading</span>
+      <span id="cap-price"></span>
+    </div>
+    <div class="toolbar">
+      <span class="picklabel">Compare</span>
+      <div class="pick" id="scope" role="group" aria-label="Systems shown"></div>
+      <span class="picklabel">Counting</span>
+      <div class="pick" id="unit" role="group" aria-label="Unit"></div>
+      <div class="scrub">
+        <span class="picklabel">Questions asked</span>
+        <input type="range" id="qs" min="1" max="600" value="20" step="1">
+      </div>
+    </div>
+    <canvas class="plot" id="plot-amort" width="1200" height="420"></canvas>
+    <dl class="readout">
+      <div><dt>questions</dt><dd id="r-q">-</dd></div>
+      <div><dt>mem0, all in</dt><dd id="r-mem0">-</dd></div>
+      <div><dt>keyword search</dt><dd id="r-bm25">-</dd></div>
+      <div><dt>cheaper right now</dt><dd id="r-winner">-</dd></div>
+    </dl>
+    <div class="banner" id="amort-banner">Loading.</div>
+  </div>
+
+  <div class="split">
+    <div>
+      <h3>Where the crossover sits depends on what you count</h3>
+      <p>
+        Count tokens and the extraction pays for itself after <strong>291</strong>
+        questions. Count dollars, where an output token costs four times an input one, and
+        it is <strong>357</strong>. Count only the questions that were answered correctly
+        and it is about <strong>143 solved</strong>, which at mem0's accuracy is roughly
+        <strong>221 asked</strong>. None of the three is wrong. The accounting choice moves
+        the answer by 60%, which is why the chart above lets you switch it.
+      </p>
+      <p>
+        Below the crossover, plain keyword search is the cheaper system. That is not an
+        argument against memory; it is an argument that the number belongs on the page
+        next to the accuracy figure.
+      </p>
+    </div>
+    <dl class="takeaway">
+      <dt>paid once</dt>
+      <dd>76,450 tokens to read it.<small>60 LLM calls over 419 turns.</small></dd>
+      <dt>paid per question</dt>
+      <dd>302 tokens.<small>Against 565 for keyword search.</small></dd>
+      <dt>so it depends</dt>
+      <dd>On how many questions you ask.<small>221 to 357, depending what you count.</small></dd>
+    </dl>
+  </div>
+</section>
+
+<section class="gut">
+  <div class="eyebrow">Figure 2</div>
+  <h2>What the money buys</h2>
+  <p class="lead">
+    The same four systems, same questions, same judge. Two of these results argue mem0's
+    case better than its own page does.
+  </p>
+  <div class="figure">
+    <div class="grid-wrap"><table class="data" id="board"></table></div>
+    <div class="banner" id="board-banner"></div>
+  </div>
+
+  <div class="split">
+    <div>
+      <p>
+        <strong>Memory beats stuffing the whole conversation in.</strong> Full context
+        scored 0.30 against mem0's 0.65, on the same questions with the same model, and it
+        did that while sending 73,892 characters per query. More context made the answers
+        worse, which is the strongest argument for extraction on this page and it is not a
+        cost argument at all.
+      </p>
+      <p>
+        <strong>Retrieval latency is the figure nobody quotes.</strong> 76.66ms at p50
+        against keyword search's 0.97ms, about 79x. It is invisible next to a multi-second
+        generation, and it is not invisible if you are fanning out retrievals.
+      </p>
+    </div>
+    <dl class="takeaway">
+      <dt>best accuracy</dt>
+      <dd>mem0, 0.65.<small>More than double full context.</small></dd>
+      <dt>cheapest per answer</dt>
+      <dd>Keyword search.<small>At 0.50 accuracy, and no extraction bill.</small></dd>
+      <dt>slowest retrieval</dt>
+      <dd>mem0, 76.66ms p50.<small>79x keyword search, and not published.</small></dd>
+    </dl>
+  </div>
+</section>
+
+<section class="gut">
+  <div class="eyebrow">Figure 3</div>
+  <h2>Where it loses</h2>
+  <ul class="map">
+    <li>
+      <b>One conversation, twenty questions.</b> 419 turns of one LoCoMo sample. The
+      crossover arithmetic depends on both, and a different conversation moves it.
+      <span class="where">results/mem0-n20.json</span>
+    </li>
+    <li>
+      <b>The dollars are a price sheet, not a measurement.</b> Everything ran locally on
+      llama3.1:8b; the money column applies published list prices to measured token counts.
+      The columns that end in DERIVED say so in the results file.
+      <span class="where">config.yaml</span>
+    </li>
+    <li>
+      <b>The judge is the same 8B model that answers.</b> Cheap and reproducible, and not
+      the same thing as a careful human label. The deterministic score is reported beside
+      it precisely because the two disagree.
+      <span class="where">judge.py</span>
+    </li>
+    <li>
+      <b>Metering mem0 needed rebinding its imports.</b> It binds `ollama.Client` at import
+      time, so patching afterwards catches nothing. That is why extraction cost tends not to
+      get measured, and it is a fragile hook that upstream can break.
+      <span class="where">meter.py</span>
+    </li>
+  </ul>
+</section>
+
+<footer class="gut">
+  <span>
+    <a href="https://github.com/lgoyal6/memharness">github.com/lgoyal6/memharness</a>
+    &middot; MIT
+  </span>
+  <span>
+    also: <a href="https://lgoyal6.github.io/noisy-rag-bench/">noisy-rag-bench</a>
+    &middot; <a href="https://lgoyal6.github.io/promptgate/">promptgate</a>
+    &middot; <a href="https://lgoyal6.github.io/flightrisk/">flightrisk</a>
+  </span>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

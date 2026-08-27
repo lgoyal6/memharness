@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 :root {
-  --paper: #fbfbfa;
-  --panel: #f2f2f0;
-  --ink: #16171a;
-  --sub: #4f5359;
-  --faint: #868b93;
-  --rule: #16171a;
-  --hair: #dcdedf;
-  --grid: #e7e9ea;
+  --paper: #faf7f0;
+  --panel: #f2ece0;
+  --ink: #1a1712;
+  --sub: #55503f;
+  --faint: #8b8473;
+  --rule: #1a1712;
+  --hair: #ded5c4;
+  --grid: #e9e1d1;
   --ox: #4a3526;
   --ox-dim: #a08a76;
   --ok: #2f5d3a;
@@ -192,3 +192,8 @@ html { scroll-padding-top: 96px; }
 .calc-form input:focus { outline: 2px solid var(--ox); outline-offset: -2px; }
 .readout dd.good { color: var(--ok); }
 .readout dd.bad { color: var(--bad); }
+
+/* Brand marks in the nav, sized to the text and inheriting its colour. */
+.navlinks a { display: inline-flex; align-items: center; gap: 7px; }
+.navlinks svg { width: 15px; height: 15px; flex: 0 0 auto; }
+.brand { letter-spacing: .005em; }

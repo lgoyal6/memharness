@@ -1,3 +1,10 @@
+<a href="https://lgoyal6.github.io/memharness/">
+  <img alt="memharness - open the live demo" src="docs/og.png">
+</a>
+
+**[Open the live demo](https://lgoyal6.github.io/memharness/)** - Drag the
+question count and watch where the extraction bill pays itself back.
+
 # memharness
 
 An agent-memory benchmark where every knob that could change a result lives in one config
@@ -6,9 +13,6 @@ memory system spends **ingesting** a conversation, not only what it spends answe
 questions about it.
 
 ---
-
-**[See it: lgoyal6.github.io/memharness](https://lgoyal6.github.io/memharness/)** - drag the
-question count and watch where the extraction bill pays itself back.
 
 ## The short version
 

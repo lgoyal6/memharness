@@ -1,18 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
 :root {
-  --paper: #fbfaf7;
-  --panel: #f5f3ec;
-  --ink: #17150f;
-  --sub: #57513f;
-  --faint: #8f8977;
-  --rule: #17150f;
-  --hair: #d9d3c4;
-  --ox: #4a3526;      /* dark coffee: this project's ink */
+  --paper: #fbfbfa;
+  --panel: #f2f2f0;
+  --ink: #16171a;
+  --sub: #4f5359;
+  --faint: #868b93;
+  --rule: #16171a;
+  --hair: #dcdedf;
+  --grid: #e7e9ea;
+  --ox: #4a3526;
   --ox-dim: #a08a76;
   --ok: #2f5d3a;
   --warn: #8a6d1f;
   --bad: #a33d2e;
-  --serif: 'Times New Roman', Times, Georgia, serif;
-  --mono: 'Courier New', Courier, monospace;
+  --serif: 'Public Sans', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, monospace;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -177,3 +180,15 @@ html { scroll-padding-top: 96px; }
   html { scroll-behavior: auto; }
   .tabs a, .navlinks a { transition: none; }
 }
+
+/* Three numbers, which is all the arithmetic needs. */
+.calc-form { padding: 14px 16px; border-top: 1px solid var(--hair);
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
+.calc-form label { display: block; font: 11px/1.6 var(--mono); letter-spacing: .09em;
+  text-transform: uppercase; color: var(--faint); }
+.calc-form input { display: block; width: 100%; margin-top: 6px; background: var(--paper);
+  color: var(--ink); border: 1px solid var(--hair); padding: 10px 11px;
+  font: 17px/1.3 var(--mono); text-transform: none; letter-spacing: 0; min-height: 42px; }
+.calc-form input:focus { outline: 2px solid var(--ox); outline-offset: -2px; }
+.readout dd.good { color: var(--ok); }
+.readout dd.bad { color: var(--bad); }

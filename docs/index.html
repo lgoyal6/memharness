@@ -20,6 +20,7 @@
 </nav>
 <nav class="tabs" aria-label="Sections">
     <a href="#sec-home">Home</a>
+    <a href="#sec-try">Try it</a>
     <a href="#sec-crossover">Crossover</a>
     <a href="#sec-buys">What it buys</a>
     <a href="#sec-limits">Limits</a>
@@ -47,6 +48,65 @@
     <div class="fact"><dt>and it is worth it</dt><dd>0.65 <small>against 0.30 for full context</small></dd></div>
   </dl>
 </header>
+
+<section id="sec-try" class="gut">
+  <div class="eyebrow">Try it</div>
+  <h2>Work out whether it would pay off for you</h2>
+  <p class="lead">
+    The crossover below is for one 419-turn conversation asked twenty questions. Yours is a
+    different shape. Put your numbers in and the same measured per-unit costs will tell you
+    where your crossover sits, and whether you are anywhere near it.
+  </p>
+
+  <div class="figure">
+    <div class="figcap">
+      <span>measured per-unit costs, your volumes</span>
+      <span id="calc-src"></span>
+    </div>
+    <div class="calc-form">
+      <label>Turns in a typical conversation
+        <input id="c-turns" type="number" min="1" step="10" value="419"></label>
+      <label>Questions you ask each conversation
+        <input id="c-questions" type="number" min="1" step="1" value="20"></label>
+      <label>Conversations a month
+        <input id="c-convos" type="number" min="1" step="10" value="500"></label>
+    </div>
+
+    <dl class="readout">
+      <div><dt>your crossover</dt><dd id="c-cross">&ndash;</dd></div>
+      <div><dt>you ask</dt><dd id="c-asked">&ndash;</dd></div>
+      <div><dt>memory, a month</dt><dd id="c-mem">&ndash;</dd></div>
+      <div><dt>keyword search</dt><dd id="c-kw">&ndash;</dd></div>
+    </dl>
+    <div class="banner" id="calc-banner">Put your numbers in.</div>
+  </div>
+
+  <div class="split">
+    <div>
+      <h3>The shape that decides it</h3>
+      <p>
+        Extraction is charged per turn and retrieval per question, so the ratio that matters
+        is <strong>questions asked per turn of conversation</strong>, not the size of either.
+        A long conversation nobody interrogates is the worst case for a memory system, and a
+        short one asked about constantly is the best.
+      </p>
+      <p>
+        The per-unit costs are the measured ones: 182.5 extraction tokens a turn, 302 tokens
+        a question against keyword search's 565. What this cannot tell you is whether the
+        answers are good enough, and on this dataset memory scored 0.65 against full context's
+        0.30, which is the argument that has nothing to do with cost.
+      </p>
+    </div>
+    <dl class="takeaway">
+      <dt>charged once</dt>
+      <dd>182.5 tokens per turn.<small>An LLM pass over the conversation.</small></dd>
+      <dt>charged every time</dt>
+      <dd>302 against 565.<small>Memory retrieval against keyword search.</small></dd>
+      <dt>so the question is</dt>
+      <dd>Questions per turn.<small>Not how big anything is.</small></dd>
+    </dl>
+  </div>
+</section>
 
 <section class="gut" id="sec-crossover">
   <div class="eyebrow">Figure 1</div>
@@ -191,6 +251,7 @@
 </footer>
 
 <script src="app.js"></script>
+<script src="calc.js"></script>
 <script src="nav.js"></script>
 </body>
 </html>
